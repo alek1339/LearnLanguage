@@ -1,0 +1,48 @@
+@import "../../../styles/colors.scss"; 
+
+.page-container {
+  padding: 50px 40px 0;
+
+  &__progress_container {
+    margin-left: 5rem !important;
+    margin-right: 5rem !important;
+  }
+
+  .bg-success {
+    background-color: $light-green !important;
+  }
+
+  .sentence {
+    border: 1px solid $grey-border;
+    padding: 10px;
+    font-size: 1.2rem;
+    font-family: sans-serif;
+  }
+
+  .txt-area {
+    width: 600px;
+    font-size: 1.2rem;
+  }
+
+  button {
+    font-family: sans-serif;
+    border: none;
+    text-transform: uppercase;
+    padding-left: 16px;
+    padding-right: 16px;
+    font-weight: 700;
+  }
+
+  svg:hover {
+    cursor: pointer;
+  }
+
+  .mistake-footer {
+    margin-top: 1rem;
+    height: 60px;
+    background: rgba(244, 65, 65, .87%);
+    color: white;
+    font-weight: 600;
+    align-items: center;
+  }
+}

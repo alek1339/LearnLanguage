@@ -1,0 +1,12 @@
+.admin-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 93px;
+
+    a{
+        margin-right: 32px;
+    }
+    a:last-child {
+        margin-right: 0;
+    }
+}

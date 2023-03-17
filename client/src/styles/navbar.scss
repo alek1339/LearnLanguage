@@ -1,0 +1,9 @@
+@import "./colors.scss";
+
+header {
+    background-color: $nav-color;
+
+    a {
+        color: white;
+    }
+}
