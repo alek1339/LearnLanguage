@@ -10,13 +10,11 @@ const LearnedLessons = require('../models/LearnedLessons');
 router.get('/test', (req, res) => res.json({ msg: 'LearnedLessons Works' }))
 
 router.get('/', (req, res) => {
-    LearnedLessons.find({}, (err, learnedLessons) => {
-        if (err) {
-            res.send(err);
-        } else {
-            res.send(learnedLessons)
-        }
-    })
+    LearnedLessons.find()
+        .then(lessons => {
+            res.send(lessons)
+        })
+        .catch(err => res.json(err))
 })
 
 router.post('/add', (req, res) => {

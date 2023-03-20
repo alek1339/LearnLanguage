@@ -10,19 +10,17 @@ const LearnedWords = require('../models/LearnedWords');
 router.get('/test', (req, res) => res.json({ msg: 'LearnedWords Works' }))
 
 router.get('/', (req, res) => {
-    LearnedWords.find({},  (err, learnedWords) => {
-        if(err) {
-            res.send(err);
-        } else {
+    LearnedWords.find()
+        .then(learnedWords => {
             res.send(learnedWords)
-        }
-    })
+        })
+        .catch(err => res.json(err))
 })
 
 router.post('/add-learned-word', (req, res) => {
-    LearnedWords.findOne({_id: req.body.id}).then(word => {
+    LearnedWords.findOne({ _id: req.body.id }).then(word => {
 
-        if(word) {
+        if (word) {
             errors.id = 'This word already exists !'
             return res.status(400).json(errors)
         } else {
@@ -30,29 +28,29 @@ router.post('/add-learned-word', (req, res) => {
                 wordId: req.body.wordId,
                 userId: req.body.userId,
             })
-            
+
             newWord
-            .save()
-            .then(word => res.json(word))
-            .catch(err => res.json(err))
+                .save()
+                .then(word => res.json(word))
+                .catch(err => res.json(err))
         }
     })
 })
 
 router.put('/update-learned-word', (req, res) => {
 
-    LearnedWords.findOneAndUpdate({english: req.body.english},{
-            wordId: req.body.wordId,
-            userId: req.body.userId,
-        },
-         {new: false})
-    .then(res.status(200).json({ message: "Successful Update" }))
-    .catch(err => res.send(err));
+    LearnedWords.findOneAndUpdate({ english: req.body.english }, {
+        wordId: req.body.wordId,
+        userId: req.body.userId,
+    },
+        { new: false })
+        .then(res.status(200).json({ message: "Successful Update" }))
+        .catch(err => res.send(err));
 });
 
 router.delete("/delete-learned-word", (req, res) => {
     console.log('Del', req.body)
-    LearnedWords.findOneAndDelete({english: req.body.english})
+    LearnedWords.findOneAndDelete({ english: req.body.english })
         .then(res.status(200).json({ message: "Successful" }))
         .catch(err => res.send(err));
 })

@@ -9,13 +9,11 @@ const Lesson = require("../models/Lesson");
 router.get("/test", (req, res) => res.json({ msg: "lesson Works" }));
 
 router.get("/", (req, res) => {
-  Lesson.find({}, (err, lesson) => {
-    if (err) {
-      res.send(err);
-    } else {
+  Lesson.find()
+    .then((lesson) => {
       res.send(lesson);
-    }
-  });
+    })
+    .catch((err) => res.json(err));
 });
 
 router.get("/current:id", (req, res) => {

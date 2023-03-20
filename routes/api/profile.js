@@ -9,13 +9,11 @@ const Profile = require("../../models/Profile");
 router.get("/test", (req, res) => res.json({ msg: "Profile Works" }));
 
 router.get("/", (req, res) => {
-  Profile.findOne({ user_id: req.query.id }, (err, profile) => {
-    if (err) {
-      res.send(err);
-    } else {
+  Profile.findOne({ user_id: req.query.id })
+    .then((profile) => {
       res.send(profile);
-    }
-  });
+    })
+    .catch((err) => res.json(err));
 });
 
 router.post("/add", (req, res) => {

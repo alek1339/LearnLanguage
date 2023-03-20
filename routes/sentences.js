@@ -10,40 +10,39 @@ const Sentence = require('../models/Sentence');
 router.get('/test', (req, res) => res.json({ msg: 'sentence Works' }))
 
 router.get('/', (req, res) => {
-    Sentence.find({}, (err, sentences) => {
-        if (err) {
-            res.send(err);
-        } else {
-            res.send(sentences)
-        }
-    })
+    Sentence.find()
+        .then(sentences => {
+            res.send(sentences);
+        })
+        .catch(err => res.json(err));
 })
 
 router.post('/add', (req, res) => {
-    Sentence.findOne({ english: req.body.english }).then(sentence => {
-        console.log(req.body)
-        if (sentence) {
-            errors.email = 'This sentence already exists !'
-            return res.status(400).json(errors)
-        } else {
-            const newSentence = new Sentence({
-                english: req.body.english,
-                german: req.body.german,
-                german2: req.body.german2,
-                german3: req.body.german3,
-                bulgarian: req.body.bulgarian,
-                img: req.body.img,
-                audio: req.body.audio,
-                germanWithHiddenPart: req.body.germanWithHiddenPart,
-                commonWords: req.body.commonWords,
-            })
+    Sentence.findOne({ english: req.body.english })
+        .then(sentence => {
+            console.log(req.body)
+            if (sentence) {
+                errors.email = 'This sentence already exists !'
+                return res.status(400).json(errors)
+            } else {
+                const newSentence = new Sentence({
+                    english: req.body.english,
+                    german: req.body.german,
+                    german2: req.body.german2,
+                    german3: req.body.german3,
+                    bulgarian: req.body.bulgarian,
+                    img: req.body.img,
+                    audio: req.body.audio,
+                    germanWithHiddenPart: req.body.germanWithHiddenPart,
+                    commonWords: req.body.commonWords,
+                })
 
-            newSentence
-                .save()
-                .then(sentence => res.json(sentence))
-                .catch(err => res.json(err))
-        }
-    })
+                newSentence
+                    .save()
+                    .then(sentence => res.json(sentence))
+                    .catch(err => res.json(err))
+            }
+        })
 })
 
 router.put('/update', (req, res) => {
