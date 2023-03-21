@@ -1,11 +1,15 @@
-import React from "react";
-import ProgressBar from "react-bootstrap/esm/ProgressBar";
+import React, { useEffect, useState, useRef } from "react";
+// import ProgressBar from "react-bootstrap/esm/ProgressBar";
 import { ICustomProgressBar } from "./types";
+import { ProgressBar, ProgressBarContainer } from './styles';
 
-const CustomProgressBar: ICustomProgressBar = ({ progress }) => {
-
+const CustomProgressBar: ICustomProgressBar = ({ progress, width, progressStep, color }) => {
+  console.log('progress', progressStep);
   return (
-    <ProgressBar variant="success" now={progress} />
+    // <ProgressBar variant="success" now={progress} />
+    <ProgressBarContainer width={`${width}px`}>
+      <ProgressBar width={width} progress={progress} progressStep={progressStep} color={color}></ProgressBar>
+    </ProgressBarContainer>
   )
 }
 

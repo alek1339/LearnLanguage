@@ -42,6 +42,8 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
   const learnedLesson = useSelector((state: RootState) => state.learnedLesson);
   const [correctStrike, setCorrectStrike] = useState(0);
   const practiceTranslation = useSelector((state: RootState) => state.practiceTranslation);
+  const progressBarWidth = 700;
+  const progressStep = 100 / currentLesson.sentences.length;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -143,6 +145,7 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
     updateUser(userData)
 
     navigate("/");
+    alert('finish lesson')
   }
 
   return (
@@ -153,12 +156,14 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
           <FontAwesomeIcon onClick={onCloseLesson} icon={faX} />
         </Col>
         <Col xs={11}>
-          <CustomProgressBar progress={percentageProgress} />
+          <CustomProgressBar width={progressBarWidth} progress={percentageProgress} progressStep={progressStep} />
         </Col>
       </Row>
 
-      <Row className="d-flex justify-content-center m-5">
-        <span className="sentence w-auto">{currentSentence.english}</span>
+      <Row className="d-flex justify-content-center">
+        <div className="sentence-container">
+          <span className="sentence w-auto">{currentSentence.english}</span>
+        </div>
       </Row>
       {LessonsProgress.zeroLevel === correctStrike ?
         <ConnectWords onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />

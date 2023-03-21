@@ -4,17 +4,19 @@
   padding: 50px 40px 0;
 
   &__progress_container {
-    margin-left: 5rem !important;
-    margin-right: 5rem !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 
-  .bg-success {
-    background-color: $light-green !important;
+  .sentence-container {
+    margin: 20px 0;
   }
 
   .sentence {
     border: 1px solid $grey-border;
     padding: 10px;
+    margin: 20px;
     font-size: 1.2rem;
     font-family: sans-serif;
   }

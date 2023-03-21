@@ -1,5 +1,4 @@
 import { Dispatch } from "react";
-import { setCurrentSentence } from "../actions/practice/practiceSentencesActions";
 import { ILesson } from "../types/Lesson";
 import { ISentence } from "../types/Sentence";
 
