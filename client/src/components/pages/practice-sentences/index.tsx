@@ -144,8 +144,9 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
     }
     updateUser(userData)
 
+    //TODO: add modal with congratulations before redirect
     navigate("/");
-    alert('finish lesson')
+
   }
 
   return (
