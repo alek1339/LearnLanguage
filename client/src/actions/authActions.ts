@@ -34,8 +34,6 @@ export const loginUser = (userData: ILoginUser) => (dispatch: Dispatch) => {
         payload: err.response.data
       })
     )
-
-  // Just for TEST
 }
 
 export const setCurrentUser = (decoded: any) => {

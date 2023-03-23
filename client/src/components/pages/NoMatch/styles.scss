@@ -1,0 +1,19 @@
+.no-match-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Times New Roman, Times, serif;
+  text-align: center;
+  
+  p {
+    font-family: Comic Sans MS, Comic Sans, cursive;
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    color: #E1BCBD;
+    font-size: 12rem;
+    margin-top: 2rem;
+  }
+}

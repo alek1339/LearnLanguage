@@ -25,6 +25,9 @@ import AddSentence from "./admin/AddSentence";
 import AddQuestion from "./admin/AddQuestion";
 import PracticeSentencesPage from "./components/pages/practice-sentences";
 import CreateProfile from "./components/auth/CreateProfile";
+import NoMatch from "./components/pages/NoMatch";
+import ProtectedRoute from "./components/common/PrivateRoute";
+import auth from "./reducers/authReducer";
 // Check for token
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -62,23 +65,51 @@ class App extends Component {
                   <Route exact path="/login" element={<Login />} />
                   <Route exact path="/register" element={<Register />} />
                   <Route exact path="/profile" element={<CreateProfile />} />
-                  <Route exact path="/admin" element={<AdminPage />} />
-                  <Route exact path="/admin/add-lesson" element={<AddLesson />} />
-                  <Route exact path="/admin/add-word" element={<AddWord />} />
                   <Route
-                    exact
-                    path="/admin/add-sentence"
-                    element={<AddSentence />}
+                    path="/admin"
+                    element={
+                      <ProtectedRoute>
+                        <AdminPage />
+                      </ProtectedRoute>
+                    }
                   />
                   <Route
-                    exact
+                    path="/admin/add-lesson"
+                    element={
+                      <ProtectedRoute>
+                        <AddLesson />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin/add-word"
+                    element={
+                      <ProtectedRoute>
+                        <AddWord />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin/add-sentence"
+                    element={
+                      <ProtectedRoute>
+                        <AddSentence />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
                     path="/admin/add-question"
-                    element={<AddQuestion />}
+                    element={
+                      <ProtectedRoute>
+                        <AddQuestion />
+                      </ProtectedRoute>
+                    }
                   />
                   <Route
                     path="/practice-sentence/:_id"
                     element={<PracticeSentencesPage />}
                   />
+                  <Route path="*" element={<NoMatch />} />
                 </Routes>
               </div>
             </main>
