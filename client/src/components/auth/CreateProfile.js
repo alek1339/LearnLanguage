@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 const CreateProfile = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.user.id)
-  console.log(userId)
+
   let [firstName, setFirstName] = useState('');
   const handleFirstNameChange = event => {
     setFirstName(event.target.value);

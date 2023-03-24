@@ -5,6 +5,11 @@ import { ErrorActions } from '../types/ErrorActions'
 const initialState: IError = {
   email: '',
   password: '',
+  password2: '',
+  passwordLength: '',
+  passwordCapitalLetter: '',
+  passwordNumber: '',
+  passwordSmallLetter: '',
   name: '',
 }
 

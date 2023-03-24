@@ -1,44 +1,59 @@
-const Validator = require('validator')
-const isEmpty = require('./is-empty')
+import { containsLowercase, containsUppercase, containsNumber } from './password';
+import { isEmail } from 'validator';
+import isEmpty from './is-empty';
+import { isLength } from './isLength';
+import equals from './equals';
 
-module.exports = function validateRegisterInput(data) {
-  let errors = {}
+export default function validateRegisterInput(data) {
+  let errors = {};
 
-  data.name = !isEmpty(data.name) ? data.name : ''
-  data.email = !isEmpty(data.email) ? data.email : ''
-  data.password = !isEmpty(data.password) ? data.password : ''
-  data.password2 = !isEmpty(data.password2) ? data.password2 : ''
+  data.name = !isEmpty(data.name) ? data.name : '';
+  data.email = !isEmpty(data.email) ? data.email : '';
+  data.password = !isEmpty(data.password) ? data.password : '';
+  data.password2 = !isEmpty(data.password2) ? data.password2 : '';
 
-  if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
-    errors.name = 'Name must be between 2 and 30 characters'
+  if (isLength(2, 30, data.password)) {
+    errors.passwordLength = 'Password must be between 2 and 30 characters';
   }
 
-  if (Validator.isEmpty(data.name)) {
-    errors.name = 'Name field is required'
+  if (!containsLowercase(data.password)) {
+    errors.passwordSmallLetter = 'Password must contain at least one small letter';
   }
 
-  if (!Validator.isEmail(data.email)) {
-    errors.email = 'Email is invalid'
+  if (!containsUppercase(data.password)) {
+    errors.passwordCapitalLetter = 'Password must contain at least one capital letter';
   }
 
-  if (Validator.isEmpty(data.email)) {
-    errors.email = 'Email field is required'
+  if (!containsNumber(data.password)) {
+    errors.passwordNumber = 'Password must contain at least one number';
+  };
+
+  if (isLength(2, 30, data.name)) {
+    errors.name = 'Name must be between 2 and 30 characters';
   }
 
-  if (Validator.isEmpty(data.password)) {
-    errors.password = 'Password field is required'
+  if (isEmpty(data.name)) {
+    errors.name = 'Name field is required';
   }
 
-  if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
-    errors.password = 'Password must be between 6 and 30 characters'
+  if (!isEmail(data.email)) {
+    errors.email = 'Email is invalid';
   }
 
-  if (Validator.isEmpty(data.password2)) {
-    errors.password = 'Confirm password field is required'
+  if (isEmpty(data.email)) {
+    errors.email = 'Email field is required';
   }
 
-  if (!Validator.equals(data.password, data.password2)) {
-    errors.password = 'Passwords must match'
+  if (isEmpty(data.password)) {
+    errors.password = ['Password field is required'];
+  }
+
+  if (isEmpty(data.password2)) {
+    errors.password2 = 'Confirm password field is required';
+  }
+
+  if (!equals(data.password, data.password2)) {
+    errors.password2 = 'Passwords must match';
   }
 
   return {
