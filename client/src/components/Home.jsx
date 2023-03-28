@@ -38,9 +38,15 @@ const Home = () => {
                 <div key={lesson._id}>
                   <Link
                     className={alreadyLearned ? "text-warning" : ""}
+                    to={`/video-lesson/${lesson._id}`}
+                  >
+                   Watch SLesson: {lesson.lessonName}
+                  </Link>
+                  <Link
+                    className={alreadyLearned ? "text-warning" : ""}
                     to={`/practice-sentence/${lesson._id}`}
                   >
-                    {lesson.lessonName}
+                   Practice: {lesson.lessonName}
                   </Link>
                   <span className="ml-5">{alreadyLearned ? "100%" : ""}</span>
                 </div>
@@ -61,6 +67,12 @@ const Home = () => {
                   : false;
               return (
                 <div key={lesson._id}>
+                                    <Link
+                    className={alreadyLearned ? "text-warning" : ""}
+                    to={`/video-lesson/${lesson._id}`}
+                  >
+                   Watch SLesson: {lesson.lessonName}
+                  </Link>
                   <Link
                     className={alreadyLearned ? "text-warning" : ""}
                     to={`/practice-sentence/${lesson._id}`}
@@ -87,11 +99,18 @@ const Home = () => {
                   : false;
               return (
                 <div key={lesson._id}>
+                                    <Link
+                    className={alreadyLearned ? "text-warning" : ""}
+                    to={`/video-lesson/${lesson._id}`}
+                  >
+                   Watch Lesson: {lesson.lessonName}
+                  </Link>
+                  {' '}
                   <Link
                     className={alreadyLearned ? "text-warning" : ""}
                     to={`/practice-sentence/${lesson._id}`}
                   >
-                    {lesson.lessonName}
+                  Practice:  {lesson.lessonName}
                   </Link>
                   <span className="ml-5">{alreadyLearned ? "100%" : ""}</span>
                 </div>
