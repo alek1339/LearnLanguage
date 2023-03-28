@@ -1,10 +1,10 @@
-import { containsLowercase, containsUppercase, containsNumber } from './password';
-import { isEmail } from 'validator';
-import isEmpty from './is-empty';
-import { isLength } from './isLength';
-import equals from './equals';
+const { containsLowercase, containsUppercase, containsNumber } = require('./password');
+const { isEmail } = require('validator');
+const isEmpty = require('./is-empty');
+const { isLength } = require('./isLength');
+const equals = require('./equals');
 
-export default function validateRegisterInput(data) {
+function validateRegisterInput(data) {
   let errors = {};
 
   data.name = !isEmpty(data.name) ? data.name : '';
@@ -61,3 +61,5 @@ export default function validateRegisterInput(data) {
     isValid: isEmpty(errors)
   }
 }
+
+module.exports = validateRegisterInput;
