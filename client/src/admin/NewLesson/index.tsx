@@ -3,9 +3,6 @@ import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from '../../store';
 
-// import { CKEditor } from "@ckeditor/ckeditor5-react";
-// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-
 import "./styles.scss";
 import { fetchWords } from "../../actions/wordsActions";
 import { fetchSentences } from "../../actions/sentencesActions";
@@ -14,18 +11,19 @@ import { INewLesson } from "./types";
 import { RootState } from "../../reducers";
 import { IWord } from "../../types/Word";
 import { ISentence } from "../../types/Sentence";
+import { isLength, isValidHttpUrl, isValidSentence } from "../../utils/validation";
 
 const NewLesson: INewLesson = () => {
   const dispatch = useAppDispatch();
-  const editorRef = useRef<{ CKEditor: NodeRequire; ClassicEditor: NodeRequire; }>();
-  const [editorLoaded, setEditorLoaded] = useState(false);
   const [showLevelsOpts, setShowLevelsOpts] = useState(false);
   const [selectedWord, setSelectedWord] = useState<string>();
   const [textLesson, setТextLesson] = useState("");
   const [addedWords, setAddedWords] = useState<Array<string>>([]);
 
   const [lessonName, setLessonName] = useState("");
+  const [lessonNameError, setLessonNameError] = useState('');
   const [videoLesson, setVideoLesson] = useState("");
+  const [videoLessonError, setVideoLessonError] = useState('');
 
   const [selectedLevel, setSelectedLevel] = useState("Level");
 
@@ -40,12 +38,6 @@ const NewLesson: INewLesson = () => {
   const [addedSentences, setAddedSentences] = useState<Array<string>>([]);
 
   useEffect(() => {
-    editorRef.current = {
-      CKEditor: require("@ckeditor/ckeditor5-react"),
-      ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
-    };
-    setEditorLoaded(true);
-
     dispatch(fetchWords());
     dispatch(fetchSentences());
   }, []);
@@ -54,8 +46,11 @@ const NewLesson: INewLesson = () => {
     const sentenceArrObjs: Array<any> = [];
 
     addedSentences.forEach((added) => {
-      const matchSentence = sentences.find((s) => s.german === added);
-      sentenceArrObjs.push(matchSentence);
+      const matchSentence: ISentence | undefined = sentences.find((s) => s.german === added);
+
+      if (matchSentence && isValidSentence(matchSentence)) {
+        sentenceArrObjs.push(matchSentence);
+      }
     });
 
     const newLesson = {
@@ -87,7 +82,6 @@ const NewLesson: INewLesson = () => {
   const addWord = () => {
     if (selectWord.length > 0 && selectedWord) {
       setAddedWords((prevArr) => [...prevArr, selectedWord]);
-
       setWordInput("");
     }
   };
@@ -135,6 +129,24 @@ const NewLesson: INewLesson = () => {
     setShowLevelsOpts(false);
   };
 
+  const handleLessonNameChange = (e: ChangeEvent<any>) => {
+    if (isLength(e.target.value, { min: 3, max: 30 })) {
+      setLessonNameError('');
+    } else {
+      setLessonNameError('Lesson name must be between 3 and 30 characters');
+    }
+    setLessonName(e.target.value);
+  };
+
+  const handleVideoLessonChange = (value: string) => {
+    if (isValidHttpUrl(value)) {
+      setVideoLessonError('');
+    } else {
+      setVideoLessonError('Please enter a valid URL');
+    }
+    setVideoLesson(value);
+  };
+
   return (
     <div className="new-lesson-container">
       <h1 className="flex justify-center">Adding new lesson</h1>
@@ -143,8 +155,9 @@ const NewLesson: INewLesson = () => {
           <input
             id="lesson-name"
             placeholder="Lesson Name"
-            onChange={(e) => setLessonName(e.target.value)}
+            onChange={(e) => handleLessonNameChange(e)}
           />
+          <span>{lessonNameError}</span>
           <div
             className="level-select"
             onClick={() => setShowLevelsOpts(!showLevelsOpts)}
@@ -166,36 +179,14 @@ const NewLesson: INewLesson = () => {
             ""
           )}
         </div>
-
-        {editorLoaded ? (
-          <div className="ck-editor mb-32">
-            {/* <CKEditor
-              editor={ClassicEditor}
-              data="<p>Hello from CKEditor 5!</p>"
-              config={{
-                ckfinder: {
-                  uploadUrl: "http://localhost:3000/admin",
-                },
-              }}
-              onInit={(editor) => {
-                console.log("Editor is ready to use!", editor);
-              }}
-              onChange={(event, editor) => {
-                const data = editor.getData();
-                setТextLesson(data);
-              }}
-            /> */}
-          </div>
-        ) : (
-          <div>Editor loading</div>
-        )}
         <div className="grid mb-32 words-row">
           <input
             id="lesson-video"
-            onChange={(e) => setVideoLesson(e.target.value)}
+            onChange={(e) => handleVideoLessonChange(e.target.value)}
             placeholder="Add a video link"
           />
           {/* <label htmlFor="lesson-video" className="primary-btn" >Add a video link</label> */}
+          <span>{videoLessonError}</span>
         </div>
 
         <div className="grid mb-32 words-row">
