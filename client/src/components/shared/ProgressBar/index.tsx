@@ -4,7 +4,7 @@ import { ICustomProgressBar } from "./types";
 import { ProgressBar, ProgressBarContainer } from './styles';
 
 const CustomProgressBar: ICustomProgressBar = ({ progress, width, progressStep, color }) => {
-  console.log('progress', progressStep);
+
   return (
     // <ProgressBar variant="success" now={progress} />
     <ProgressBarContainer width={`${width}px`}>

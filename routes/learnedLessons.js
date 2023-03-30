@@ -19,7 +19,6 @@ router.get('/', (req, res) => {
 
 router.post('/add', (req, res) => {
     LearnedLessons.findOne({ _id: req.body.id }).then(lesson => {
-        console.log('Add lesson', lesson)
         if (lesson) {
             errors.email = 'This lesson already exists !'
             return res.status(400).json(errors)
