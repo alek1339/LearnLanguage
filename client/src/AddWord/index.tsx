@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, ChangeEvent } from 'react';
+import React, { useState, useEffect, useRef, ChangeEvent, useMemo } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -83,17 +83,20 @@ const AddWord: IAddWord = () => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
+  const memoizedList = useMemo(() => {
+    if (filteredWords.length > 0 && wordInput.length > 0) {
+      return <List elements={filteredWords.map(w => w.english)} className='list-all-words' />;
+    }
+    return null;
+  }, [filteredWords, wordInput]);
+
   return (
     <div>
       <AdminNav />
       <div className='new-lesson-container mt-75'>
         <input placeholder='Check if word already exists' onChange={e => onWordInputChange(e)} />
         <div className='words-row'>
-          {
-            filteredWords.length > 0 && wordInput.length > 0 ?
-              <List elements={filteredWords.map(w => w.english)} className='list-all-words' />
-              : ''
-          }
+          {memoizedList}
         </div>
         <div className='flex direction-column'>
           <input placeholder="English" name="english" value={inputs.english} onChange={onInputChange} />
