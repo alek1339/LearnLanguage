@@ -37,6 +37,12 @@ export class FetchWordAction implements Action {
   constructor(public payload: IWord[]) { }
 }
 
+export class AddWordAction implements Action {
+  readonly type = ActionTypes.ADD_WORD;
+
+  constructor(public payload: IWord) { }
+}
+
 export class AddLearnedLesson implements Action {
   readonly type = ActionTypes.ADD_LEARNED_LESSON;
 

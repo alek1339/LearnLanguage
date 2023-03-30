@@ -13,7 +13,7 @@ const WordSchema = new Schema({
     },
     plural: {
         type: String,
-        required: true
+        required: false
     },
     feminne: {
         type: String,
@@ -22,11 +22,11 @@ const WordSchema = new Schema({
     masculine: {
         type: String,
         required: false
-    },	
+    },
     neuter: {
         type: String,
         required: false
-    },	
+    },
     img: {
         type: String,
         required: false

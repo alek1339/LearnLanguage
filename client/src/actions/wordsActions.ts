@@ -6,7 +6,13 @@ import { IWord } from '../types/Word';
 export const addWord = (wordData: IWord) => (dispatch: Dispatch) => {
   axios
     .post('/words/add', wordData)
-    .then(res => alert('word was added successfully!'))
+    .then(res => {
+      dispatch({
+        type: ActionTypes.ADD_WORD,
+        payload: res.data
+      })
+      alert('Word added successfully');
+    })
     .catch(err =>
       dispatch({
         type: ActionTypes.GET_ERRORS,

@@ -25,6 +25,8 @@ import onContinue from "../../../utils/onContinue";
 import updateProgress from "../../../utils/updateProgress";
 import { IAddLearnedLessonData } from "../../../types/LearnedLesson";
 import { useAppDispatch } from "../../../store";
+import Modal from "../../Modal";
+import { createPortal } from "react-dom";
 
 const PracticeSentencesPage: IPracticeSentencesPage = () => {
   const dispatch = useAppDispatch();
@@ -44,6 +46,7 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
   const practiceTranslation = useSelector((state: RootState) => state.practiceTranslation);
   const progressBarWidth = 700;
   const progressStep = 100 / currentLesson.sentences.length;
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -143,10 +146,12 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
       lesson: updatedLessons
     }
     updateUser(userData)
+    setShowModal(true);
+  }
 
-    //TODO: add modal with congratulations before redirect
+  const onModalClose = () => {
+    setShowModal(false);
     navigate("/");
-
   }
 
   return (
@@ -184,6 +189,13 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
           {translation}
         </Row> : ''
       }
+      {showModal && createPortal(
+        <Modal onClose={onModalClose}>
+          <h1>Nice Job</h1>
+          <p>Continue with the hard work...</p>
+        </Modal>,
+        document.getElementById('modal-root') as HTMLElement
+      )}
     </div>
   )
 }

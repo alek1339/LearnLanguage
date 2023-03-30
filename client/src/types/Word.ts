@@ -3,7 +3,7 @@ export interface IWord {
   english: string,
   german: string,
   plural: string,
-  feminne: string,
+  feminine: string,
   masculine: string,
   neuter: string,
   img: string,
