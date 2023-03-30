@@ -12,6 +12,7 @@ import AdminNav from '../admin/AdminNav';
 import { RootState } from '../reducers';
 import { IAddWord } from './types';
 import { IWord } from '../types/Word';
+import List from '../components/List';
 
 const AddWord: IAddWord = () => {
   const dispatch = useAppDispatch();
@@ -19,26 +20,29 @@ const AddWord: IAddWord = () => {
   const [filteredWords, setFilteredWords] = useState<Array<IWord>>([]);
   const [wordInput, setWordInput] = useState('');
 
-  const [english, setEnglish] = useState('');
-  const [german, setGerman] = useState('');
-  const [plural, setPlural] = useState('');
-  const [feminne, setFeminne] = useState('');
-  const [masculine, setMasculine] = useState('');
-  const [neuter, setNeuter] = useState('');
-  const [img, setImg] = useState('');
+  const [inputs, setInputs] = useState({
+    english: '',
+    german: '',
+    plural: '',
+    feminine: '',
+    masculine: '',
+    neuter: '',
+    img: ''
+  });
 
   const onSubmit = () => {
     const newWord: IWord = {
-      english,
-      german,
-      plural,
-      feminne,
-      masculine,
-      neuter,
-      img
+      english: inputs.english,
+      german: inputs.german,
+      plural: inputs.plural,
+      feminine: inputs.feminine,
+      masculine: inputs.masculine,
+      neuter: inputs.neuter,
+      img: inputs.img
     }
 
-    dispatch(addWord(newWord))
+    dispatch(addWord(newWord));
+    clearInputs();
   };
 
   useEffect(() => {
@@ -54,6 +58,31 @@ const AddWord: IAddWord = () => {
     }
   }
 
+  const clearInputs = () => {
+    setInputs({
+      english: '',
+      german: '',
+      plural: '',
+      feminine: '',
+      masculine: '',
+      neuter: '',
+      img: ''
+    });
+  };
+
+
+
+  const handleOnSubmit = (e: ChangeEvent<any>) => {
+    e.preventDefault();
+    onSubmit();
+    clearInputs();
+
+  };
+
+  const onInputChange = (e: ChangeEvent<any>) => {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
+  };
+
   return (
     <div>
       <AdminNav />
@@ -62,26 +91,20 @@ const AddWord: IAddWord = () => {
         <div className='words-row'>
           {
             filteredWords.length > 0 && wordInput.length > 0 ?
-              <ul className='list-all-words'>
-                {
-                  filteredWords.map((word, i) => {
-                    return (<li key={i}>{word.english}</li>)
-                  })
-                }
-              </ul>
+              <List elements={filteredWords.map(w => w.english)} className='list-all-words' />
               : ''
           }
         </div>
         <div className='flex direction-column'>
-          <input placeholder="English" onChange={(e) => setEnglish(e.target.value)} />
-          <input placeholder="German" onChange={(e) => setGerman(e.target.value)} />
-          <input placeholder="Plural" onChange={(e) => setPlural(e.target.value)} />
-          <input placeholder="Feminne" onChange={(e) => setFeminne(e.target.value)} />
-          <input placeholder="Masculine" onChange={(e) => setMasculine(e.target.value)} />
-          <input placeholder="Neuter" onChange={(e) => setNeuter(e.target.value)} />
-          <input placeholder="Image" onChange={(e) => setImg(e.target.value)} />
+          <input placeholder="English" name="english" value={inputs.english} onChange={onInputChange} />
+          <input placeholder="German" name="german" value={inputs.german} onChange={onInputChange} />
+          <input placeholder="Plural" name="plural" value={inputs.plural} onChange={onInputChange} />
+          <input placeholder="Feminine" name="feminine" value={inputs.feminine} onChange={onInputChange} />
+          <input placeholder="Masculine" name="masculine" value={inputs.masculine} onChange={onInputChange} />
+          <input placeholder="Neuter" name="neuter" value={inputs.neuter} onChange={onInputChange} />
+          <input placeholder="Image" name="img" value={inputs.img} onChange={onInputChange} />
         </div>
-        <button className='primary-btn mt-75' onClick={() => onSubmit()}>Add Word</button>
+        <button className='primary-btn mt-75' onClick={(e) => handleOnSubmit(e)}>Add Word</button>
       </div>
     </div>
   )
