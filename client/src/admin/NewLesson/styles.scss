@@ -17,6 +17,11 @@
         margin-top: 40px;
     }
 
+    .inputs-container{
+        display: flex;
+        flex-direction: column;
+    }
+
     .level-row {
         grid-template-columns: 50% 50%;
 
