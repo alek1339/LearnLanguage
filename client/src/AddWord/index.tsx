@@ -1,18 +1,14 @@
-import React, { useState, useEffect, useRef, ChangeEvent, useMemo } from 'react';
-
-import { useSelector, useDispatch } from 'react-redux';
-
+import React, { useState, useEffect, ChangeEvent, useMemo } from 'react';
+import { useSelector, } from 'react-redux';
 import { useAppDispatch } from '../store';
-
 import { fetchWords, addWord } from '../actions/wordsActions';
-import "./styles.scss";
-
-
 import AdminNav from '../admin/AdminNav';
 import { RootState } from '../reducers';
 import { IAddWord } from './types';
 import { IWord } from '../types/Word';
 import List from '../components/List';
+import useFormInputs from '../hooks/useFormInputs';
+import "./styles.scss";
 
 const AddWord: IAddWord = () => {
   const dispatch = useAppDispatch();
@@ -20,30 +16,21 @@ const AddWord: IAddWord = () => {
   const [filteredWords, setFilteredWords] = useState<Array<IWord>>([]);
   const [wordInput, setWordInput] = useState('');
 
-  const [inputs, setInputs] = useState({
-    english: '',
-    german: '',
-    plural: '',
-    feminine: '',
-    masculine: '',
-    neuter: '',
-    img: ''
+  const { inputs, handleInputChange, handleSubmit, resetInputs } = useFormInputs<IWord>({
+    initialValues: {
+      english: '',
+      german: '',
+      plural: '',
+      feminine: '',
+      masculine: '',
+      neuter: '',
+      img: '',
+    },
+    onSubmit: (newWord) => {
+      dispatch(addWord(newWord));
+      resetInputs();
+    },
   });
-
-  const onSubmit = () => {
-    const newWord: IWord = {
-      english: inputs.english,
-      german: inputs.german,
-      plural: inputs.plural,
-      feminine: inputs.feminine,
-      masculine: inputs.masculine,
-      neuter: inputs.neuter,
-      img: inputs.img
-    }
-
-    dispatch(addWord(newWord));
-    clearInputs();
-  };
 
   useEffect(() => {
     dispatch(fetchWords());
@@ -57,31 +44,6 @@ const AddWord: IAddWord = () => {
       setFilteredWords(words.filter(w => w.english.startsWith(e.target.value)))
     }
   }
-
-  const clearInputs = () => {
-    setInputs({
-      english: '',
-      german: '',
-      plural: '',
-      feminine: '',
-      masculine: '',
-      neuter: '',
-      img: ''
-    });
-  };
-
-
-
-  const handleOnSubmit = (e: ChangeEvent<any>) => {
-    e.preventDefault();
-    onSubmit();
-    clearInputs();
-
-  };
-
-  const onInputChange = (e: ChangeEvent<any>) => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
-  };
 
   const memoizedList = useMemo(() => {
     if (filteredWords.length > 0 && wordInput.length > 0) {
@@ -99,15 +61,15 @@ const AddWord: IAddWord = () => {
           {memoizedList}
         </div>
         <div className='flex direction-column'>
-          <input placeholder="English" name="english" value={inputs.english} onChange={onInputChange} />
-          <input placeholder="German" name="german" value={inputs.german} onChange={onInputChange} />
-          <input placeholder="Plural" name="plural" value={inputs.plural} onChange={onInputChange} />
-          <input placeholder="Feminine" name="feminine" value={inputs.feminine} onChange={onInputChange} />
-          <input placeholder="Masculine" name="masculine" value={inputs.masculine} onChange={onInputChange} />
-          <input placeholder="Neuter" name="neuter" value={inputs.neuter} onChange={onInputChange} />
-          <input placeholder="Image" name="img" value={inputs.img} onChange={onInputChange} />
+          <input placeholder="English" name="english" value={inputs.english} onChange={handleInputChange} />
+          <input placeholder="German" name="german" value={inputs.german} onChange={handleInputChange} />
+          <input placeholder="Plural" name="plural" value={inputs.plural} onChange={handleInputChange} />
+          <input placeholder="Feminine" name="feminine" value={inputs.feminine} onChange={handleInputChange} />
+          <input placeholder="Masculine" name="masculine" value={inputs.masculine} onChange={handleInputChange} />
+          <input placeholder="Neuter" name="neuter" value={inputs.neuter} onChange={handleInputChange} />
+          <input placeholder="Image" name="img" value={inputs.img} onChange={handleInputChange} />
         </div>
-        <button className='primary-btn mt-75' onClick={(e) => handleOnSubmit(e)}>Add Word</button>
+        <button className='primary-btn mt-75' onClick={(e) => handleSubmit(e)}>Add Word</button>
       </div>
     </div>
   )

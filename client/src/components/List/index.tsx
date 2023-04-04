@@ -1,10 +1,19 @@
 import React from 'react'
 import { IList } from './types';
 
-const List: IList = ({ elements, className }) => {
+const List: IList = ({ elements, className, onClick }) => {
+  const handleClick = (el: any) => {
+    if (onClick) {
+      onClick(el);
+    }
+  }
+
+
   return (
     <ul className={className ? className : ''}>
-      {elements.map((el, i) => <li key={i}>{el}</li>)}
+      {elements.map((el, i) => <li key={i}
+        onClick={handleClick}
+      >{el}</li>)}
     </ul>
   )
 }

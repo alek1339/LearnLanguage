@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Button, Col, Form, Row } from "react-bootstrap"
 import { IPracticeSentencesPage } from "./types"
 import './styles.scss';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { fetchSentences } from "../../../actions/sentencesActions";
 import { updateUser } from "../../../actions/userActions";
 import { RootState } from "../../../reducers";
@@ -171,6 +171,8 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
           <span className="sentence w-auto">{currentSentence.english}</span>
         </div>
       </Row>
+
+      {/* TODO - add component for switching between levels */}
       {LessonsProgress.zeroLevel === correctStrike ?
         <ConnectWords onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
         : ''}
@@ -183,7 +185,6 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
         <Translation onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
         : ''}
 
-
       {translation !== '' ?
         <Row className="d-flex justify-content-center mistake-footer">
           {translation}
@@ -191,6 +192,7 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
       }
       {showModal && createPortal(
         <Modal onClose={onModalClose}>
+          {/* TODO - add modal body component */}
           <h1>Nice Job</h1>
           <p>Continue with the hard work...</p>
         </Modal>,

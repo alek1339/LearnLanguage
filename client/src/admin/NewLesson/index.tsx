@@ -12,17 +12,25 @@ import { RootState } from "../../reducers";
 import { IWord } from "../../types/Word";
 import { ISentence } from "../../types/Sentence";
 import { isLength, isValidHttpUrl, isValidSentence } from "../../utils/validation";
+import { LanguageLevels } from "../../enums/languageLevels";
+import List from "../../components/List";
+import useFormInputs from "../../hooks/useFormInputs";
 
 const NewLesson: INewLesson = () => {
   const dispatch = useAppDispatch();
   const [showLevelsOpts, setShowLevelsOpts] = useState(false);
   const [selectedWord, setSelectedWord] = useState<string>();
-  const [textLesson, setТextLesson] = useState("");
+  const { inputs, handleInputChange, resetInputs } = useFormInputs({
+    initialValues:
+    {
+      textLesson: '',
+      lessonName: '',
+      videoLesson: '',
+    },
+    onSubmit: () => { }
+  });
   const [addedWords, setAddedWords] = useState<Array<string>>([]);
-
-  const [lessonName, setLessonName] = useState("");
   const [lessonNameError, setLessonNameError] = useState('');
-  const [videoLesson, setVideoLesson] = useState("");
   const [videoLessonError, setVideoLessonError] = useState('');
 
   const [selectedLevel, setSelectedLevel] = useState("Level");
@@ -54,13 +62,15 @@ const NewLesson: INewLesson = () => {
     });
 
     const newLesson = {
-      textLesson,
+      textLesson: inputs.textLesson,
       level: selectedLevel,
       words: addedWords,
       sentences: sentenceArrObjs,
-      lessonName,
-      videoLesson,
+      lessonName: inputs.lessonName,
+      videoLesson: inputs.videoLesson,
     };
+
+    resetInputs();
 
     dispatch(addLesson(newLesson));
   };
@@ -73,7 +83,7 @@ const NewLesson: INewLesson = () => {
     if (words.length > 0) {
       setFilteredWords(
         words.filter((w) =>
-          w.german.toLowerCase().startsWith(e.target.valuetoLowerCase())
+          w.german.toLowerCase().startsWith(e.target.value.toLowerCase())
         )
       );
     }
@@ -135,16 +145,16 @@ const NewLesson: INewLesson = () => {
     } else {
       setLessonNameError('Lesson name must be between 3 and 30 characters');
     }
-    setLessonName(e.target.value);
+    handleInputChange(e);
   };
 
-  const handleVideoLessonChange = (value: string) => {
-    if (isValidHttpUrl(value)) {
+  const handleVideoLessonChange = (e: ChangeEvent<any>) => {
+    if (isValidHttpUrl(e.target.value)) {
       setVideoLessonError('');
     } else {
       setVideoLessonError('Please enter a valid URL');
     }
-    setVideoLesson(value);
+    handleInputChange(e);
   };
 
   return (
@@ -152,12 +162,16 @@ const NewLesson: INewLesson = () => {
       <h1 className="flex justify-center">Adding new lesson</h1>
       <div>
         <div className="grid mb-32 level-row">
-          <input
-            id="lesson-name"
-            placeholder="Lesson Name"
-            onChange={(e) => handleLessonNameChange(e)}
-          />
-          <span>{lessonNameError}</span>
+          <div className="inputs-container">
+            <input
+              id="lesson-name"
+              placeholder="Lesson Name"
+              name="lessonName"
+              value={inputs.lessonName}
+              onChange={(e) => handleLessonNameChange(e)}
+            />
+            <span>{lessonNameError}</span>
+          </div>
           <div
             className="level-select"
             onClick={() => setShowLevelsOpts(!showLevelsOpts)}
@@ -168,21 +182,26 @@ const NewLesson: INewLesson = () => {
           {showLevelsOpts ? (
             <div>
               <ul>
-                <li onClick={() => selectLevel("A1")}>A1</li>
-                <li onClick={() => selectLevel("A2")}>A2</li>
-                <li onClick={() => selectLevel("B1")}>B1</li>
-                <li onClick={() => selectLevel("B2")}>B2</li>
-                <li onClick={() => selectLevel("C1")}>C1</li>
+                {LanguageLevels.map((level) => {
+                  return (
+                    <li key={level} onClick={() => selectLevel(level)}>
+                      {level}
+                    </li>
+                  );
+                })
+                }
               </ul>
             </div>
           ) : (
             ""
           )}
         </div>
-        <div className="grid mb-32 words-row">
+        <div className="grid mb-32 words-row inputs-container">
           <input
             id="lesson-video"
-            onChange={(e) => handleVideoLessonChange(e.target.value)}
+            name="videoLesson"
+            value={inputs.videoLesson}
+            onChange={(e) => handleVideoLessonChange(e)}
             placeholder="Add a video link"
           />
           {/* <label htmlFor="lesson-video" className="primary-btn" >Add a video link</label> */}
@@ -204,22 +223,20 @@ const NewLesson: INewLesson = () => {
           </label>
           <div>
             {filteredWords.length > 0 && wordInput.length > 0 ? (
-              <ul>
+              <>
                 {filteredWords.map((word, i) => {
                   return (
-                    <li key={i} onClick={() => selectWord(word.german)}>
-                      {word.german}
-                    </li>
+                    <List key={i} onClick={() => selectWord(word.german)} elements={filteredWords.map(w => w.english)} className='list-all-words' />
                   );
                 })}
-              </ul>
+              </>
             ) : (
               ""
             )}
           </div>
         </div>
 
-        <div className="grid mb-32 words-row">
+        <div className="grid mb-32">
           <input
             id="word-input"
             onChange={(e) => onSentenceInputChange(e)}
@@ -234,15 +251,13 @@ const NewLesson: INewLesson = () => {
           </label>
           <div>
             {filteredSentences.length > 0 && sentenceInput.length > 0 ? (
-              <ul className="sentences-select">
+              <>
                 {filteredSentences.map((sentence, i) => {
                   return (
-                    <li key={i} onClick={() => selectSentence(sentence.german)}>
-                      {sentence.german}
-                    </li>
+                    <List onClick={() => selectSentence(sentence.german)} key={i} elements={filteredSentences.map(s => s.german)} className='sentences-select' />
                   );
                 })}
-              </ul>
+              </>
             ) : (
               ""
             )}
