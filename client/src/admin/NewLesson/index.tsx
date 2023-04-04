@@ -90,7 +90,7 @@ const NewLesson: INewLesson = () => {
   };
 
   const addWord = () => {
-    if (selectWord.length > 0 && selectedWord) {
+    if (selectedWord && selectWord.length > 0) {
       setAddedWords((prevArr) => [...prevArr, selectedWord]);
       setWordInput("");
     }
@@ -120,7 +120,7 @@ const NewLesson: INewLesson = () => {
   };
 
   const addSentence = () => {
-    if (selectSentence.length > 0) {
+    if (selectedSentence && selectSentence.length > 0) {
       setAddedSentences((prevArr) => [...prevArr, selectedSentence]);
     }
   };
