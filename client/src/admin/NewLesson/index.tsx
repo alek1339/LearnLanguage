@@ -16,6 +16,9 @@ import { LanguageLevels } from "../../enums/languageLevels";
 import List from "../../components/List";
 import useFormInputs from "../../hooks/useFormInputs";
 
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 const NewLesson: INewLesson = () => {
   const dispatch = useAppDispatch();
   const [showLevelsOpts, setShowLevelsOpts] = useState(false);
@@ -45,6 +48,8 @@ const NewLesson: INewLesson = () => {
   const [selectedSentence, setSelectedSentence] = useState<string>("");
   const [addedSentences, setAddedSentences] = useState<Array<string>>([]);
 
+  const [value, setValue] = useState('');
+
   useEffect(() => {
     dispatch(fetchWords());
     dispatch(fetchSentences());
@@ -62,7 +67,7 @@ const NewLesson: INewLesson = () => {
     });
 
     const newLesson = {
-      textLesson: inputs.textLesson,
+      textLesson: value,
       level: selectedLevel,
       words: addedWords,
       sentences: sentenceArrObjs,
@@ -71,8 +76,8 @@ const NewLesson: INewLesson = () => {
     };
 
     resetInputs();
-
-    dispatch(addLesson(newLesson));
+    console.log(value);
+    // dispatch(addLesson(newLesson));
   };
 
   const onWordInputChange = (e: ChangeEvent<any>) => {
@@ -287,6 +292,8 @@ const NewLesson: INewLesson = () => {
               ""
             )}
           </div>
+
+          <ReactQuill theme="snow" value={value} onChange={setValue} />
 
           <div>
             Sentences:
