@@ -46,5 +46,5 @@ export class AddWordAction implements Action {
 export class AddLearnedLesson implements Action {
   readonly type = ActionTypes.ADD_LEARNED_LESSON;
 
-  constructor(public payload: ILesson) { }
+  constructor(public payload: any) { }
 }

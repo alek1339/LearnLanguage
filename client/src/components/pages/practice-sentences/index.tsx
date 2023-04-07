@@ -4,7 +4,6 @@ import { IPracticeSentencesPage } from "./types"
 import './styles.scss';
 import { useSelector } from "react-redux";
 import { fetchSentences } from "../../../actions/sentencesActions";
-import { updateUser } from "../../../actions/userActions";
 import { RootState } from "../../../reducers";
 import CustomProgressBar from "../../shared/ProgressBar";
 import { setCurrentLesson } from "../../../actions/practice/practiceLessonsActions";
@@ -27,6 +26,7 @@ import { IAddLearnedLessonData } from "../../../types/LearnedLesson";
 import { useAppDispatch } from "../../../store";
 import Modal from "../../Modal";
 import { createPortal } from "react-dom";
+import { updateProfile } from "../../../actions/profileActions";
 
 const PracticeSentencesPage: IPracticeSentencesPage = () => {
   const dispatch = useAppDispatch();
@@ -135,19 +135,21 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
     } else {
       updatedLessons = profile.learnedLessons?.map((lesson) => {
         if (lesson.lessonId === currentLesson._id) {
-          lesson.correctStrike += 1;
+          return {
+            ...lesson,
+            correctStrike: lesson.correctStrike + 1,
+          };
         }
         return lesson;
       })
     }
 
-    let userData = {
+    let profileData = {
       id: profile._id,
       lesson: updatedLessons
-    }
-    updateUser(userData)
+    };
+    updateProfile(profileData)
     setShowModal(true);
-    navigate("/");
   }
 
   const onModalClose = () => {

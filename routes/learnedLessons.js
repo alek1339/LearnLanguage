@@ -13,7 +13,7 @@ router.get('/test', (req, res) => res.json({ msg: 'LearnedLessons Works' }))
 router.get('/', (req, res) => {
     LearnedLessons.find()
         .then(lessons => {
-            // const updatedLessons = updateLessonRepetitionStatus(lessons);
+            const updatedLessons = updateLessonRepetitionStatus(lessons);
             res.send(lessons)
         })
         .catch(err => res.json(err))

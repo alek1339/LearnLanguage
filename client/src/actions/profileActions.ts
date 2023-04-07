@@ -2,6 +2,7 @@ import { ActionTypes } from "../enums/actionTypes";
 import { Dispatch } from 'redux';
 import axios from "axios";
 import { IFetchProfileData, IProfile } from "../types/Profile";
+import { ILearnedLesson } from "../types/LearnedLesson";
 
 export const fetchProfile = (profileData: IFetchProfileData) => (dispatch: Dispatch) => {
   axios
@@ -22,4 +23,11 @@ export const addProfile = (profileData: IProfile) => (dispatch: Dispatch) => {
     .then((res) => console.log('Added profile', res))
     .catch((err) => console.log('Catched an error', err));
 };
+
+export const updateProfile = (userData: any) => {
+
+  axios.put('/profile/update', userData)
+    .then(res => console.log(res))
+}
+
 
