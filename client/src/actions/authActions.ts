@@ -5,6 +5,8 @@ import axios from 'axios'
 import jwt_decode from 'jwt-decode'
 import setAuthToken from '../utils/setAuthToken'
 import { IRegisterUser, ILoginUser } from '../types/User';
+import { validateUserData } from '../utils/validateUserData';
+import { storeToken } from '../utils/storeToken';
 
 export const registerUser = (userData: IRegisterUser, history: any) => (dispatch: Dispatch) => {
   axios
@@ -20,11 +22,19 @@ export const registerUser = (userData: IRegisterUser, history: any) => (dispatch
 
 // Login User
 export const loginUser = (userData: ILoginUser) => (dispatch: Dispatch) => {
+  const { errors, isValid } = validateUserData(userData);
+
+  if (!isValid) {
+    return dispatch({
+      type: ActionTypes.GET_ERRORS,
+      payload: errors,
+    });
+  }
+
   axios.post('/users/login', userData)
     .then(res => {
       const { token } = res.data
-      localStorage.setItem('jwtToken', token)
-      setAuthToken(token)
+      storeToken(token);
       const decoded = jwt_decode(token)
       dispatch(setCurrentUser(decoded))
     })
@@ -33,8 +43,8 @@ export const loginUser = (userData: ILoginUser) => (dispatch: Dispatch) => {
         type: ActionTypes.GET_ERRORS,
         payload: err.response.data
       })
-    )
-}
+    );
+};
 
 export const setCurrentUser = (decoded: any) => {
   return {

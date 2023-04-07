@@ -16,6 +16,10 @@ import { LanguageLevels } from "../../enums/languageLevels";
 import List from "../../components/List";
 import useFormInputs from "../../hooks/useFormInputs";
 
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import DOMPurify from 'dompurify';
+
 const NewLesson: INewLesson = () => {
   const dispatch = useAppDispatch();
   const [showLevelsOpts, setShowLevelsOpts] = useState(false);
@@ -26,6 +30,7 @@ const NewLesson: INewLesson = () => {
       textLesson: '',
       lessonName: '',
       videoLesson: '',
+      sentenceInput: '',
     },
     onSubmit: () => { }
   });
@@ -45,6 +50,8 @@ const NewLesson: INewLesson = () => {
   const [selectedSentence, setSelectedSentence] = useState<string>("");
   const [addedSentences, setAddedSentences] = useState<Array<string>>([]);
 
+  const [value, setValue] = useState('');
+
   useEffect(() => {
     dispatch(fetchWords());
     dispatch(fetchSentences());
@@ -62,7 +69,7 @@ const NewLesson: INewLesson = () => {
     });
 
     const newLesson = {
-      textLesson: inputs.textLesson,
+      textLesson: DOMPurify.sanitize(value),
       level: selectedLevel,
       words: addedWords,
       sentences: sentenceArrObjs,
@@ -90,7 +97,7 @@ const NewLesson: INewLesson = () => {
   };
 
   const addWord = () => {
-    if (selectWord.length > 0 && selectedWord) {
+    if (selectedWord && selectWord.length > 0) {
       setAddedWords((prevArr) => [...prevArr, selectedWord]);
       setWordInput("");
     }
@@ -108,7 +115,7 @@ const NewLesson: INewLesson = () => {
   const onSentenceInputChange = (e: ChangeEvent<any>) => {
     setFilteredSentences([]);
     setSelectedSentence(e.target.value);
-    setSentenceInput(e.target.value);
+    handleInputChange(e);
 
     if (sentences.length > 0) {
       setFilteredSentences(
@@ -120,8 +127,9 @@ const NewLesson: INewLesson = () => {
   };
 
   const addSentence = () => {
-    if (selectSentence.length > 0) {
+    if (selectedSentence && selectSentence.length > 0) {
       setAddedSentences((prevArr) => [...prevArr, selectedSentence]);
+      handleInputChange({ target: { name: "sentenceInput", value: "" } } as ChangeEvent<any>);
     }
   };
 
@@ -131,6 +139,7 @@ const NewLesson: INewLesson = () => {
 
   const selectSentence = (sentance: string) => {
     setSelectedSentence(sentance);
+    handleInputChange({ target: { name: "sentenceInput", value: sentance } } as ChangeEvent<any>);
     setFilteredSentences([]);
   };
 
@@ -204,7 +213,6 @@ const NewLesson: INewLesson = () => {
             onChange={(e) => handleVideoLessonChange(e)}
             placeholder="Add a video link"
           />
-          {/* <label htmlFor="lesson-video" className="primary-btn" >Add a video link</label> */}
           <span>{videoLessonError}</span>
         </div>
 
@@ -214,6 +222,15 @@ const NewLesson: INewLesson = () => {
             onChange={(e) => onWordInputChange(e)}
             value={selectedWord}
           />
+          <div>
+            {filteredWords.length > 0 && wordInput.length > 0 ? (
+              <div className="dropdown">
+                <List onClick={selectWord} elements={filteredWords.map(w => w.english)} className='' />
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
           <label
             htmlFor="word-input"
             className="primary-btn"
@@ -221,27 +238,29 @@ const NewLesson: INewLesson = () => {
           >
             Add a word
           </label>
-          <div>
-            {filteredWords.length > 0 && wordInput.length > 0 ? (
-              <>
-                {filteredWords.map((word, i) => {
-                  return (
-                    <List key={i} onClick={() => selectWord(word.german)} elements={filteredWords.map(w => w.english)} className='list-all-words' />
-                  );
-                })}
-              </>
-            ) : (
-              ""
-            )}
-          </div>
+
         </div>
 
         <div className="grid mb-32">
           <input
             id="word-input"
+            name="sentenceInput"
             onChange={(e) => onSentenceInputChange(e)}
-            value={selectedSentence}
+            value={inputs.sentenceInput}
           />
+          <div>
+            {filteredSentences.length > 0 && inputs.sentenceInput.length > 0 ? (
+              <div className="dropdown">
+                <List
+                  elements={filteredSentences.map(s => s.german)}
+                  onClick={selectSentence}
+                  className='list-all-words'
+                />
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
           <label
             htmlFor="word-input"
             className="primary-btn"
@@ -249,19 +268,6 @@ const NewLesson: INewLesson = () => {
           >
             Add a Sentence
           </label>
-          <div>
-            {filteredSentences.length > 0 && sentenceInput.length > 0 ? (
-              <>
-                {filteredSentences.map((sentence, i) => {
-                  return (
-                    <List onClick={() => selectSentence(sentence.german)} key={i} elements={filteredSentences.map(s => s.german)} className='sentences-select' />
-                  );
-                })}
-              </>
-            ) : (
-              ""
-            )}
-          </div>
         </div>
 
         <div>
@@ -287,6 +293,8 @@ const NewLesson: INewLesson = () => {
               ""
             )}
           </div>
+
+          <ReactQuill theme="snow" value={value} onChange={setValue} />
 
           <div>
             Sentences:

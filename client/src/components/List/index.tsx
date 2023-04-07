@@ -12,7 +12,7 @@ const List: IList = ({ elements, className, onClick }) => {
   return (
     <ul className={className ? className : ''}>
       {elements.map((el, i) => <li key={i}
-        onClick={handleClick}
+        onClick={() => handleClick(el)}
       >{el}</li>)}
     </ul>
   )

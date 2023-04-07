@@ -12,7 +12,6 @@ const VideoLesson: IVideoLesson = () => {
   const { _id } = useParams();
   const dispatch = useAppDispatch();
   const { videoLesson, lessonName } = useSelector((state: RootState) => state.practiceLesson);
-  const [lessonUrl, setLessonUrl] = useState<string>('');
 
   useEffect(() => {
     dispatch(setCurrentLesson(_id || ''));
