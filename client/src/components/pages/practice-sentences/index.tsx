@@ -147,6 +147,7 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
     }
     updateUser(userData)
     setShowModal(true);
+    navigate("/");
   }
 
   const onModalClose = () => {
@@ -202,4 +203,4 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
   )
 }
 
-export default PracticeSentencesPage
+export default PracticeSentencesPage;
