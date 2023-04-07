@@ -36,20 +36,21 @@ const Home = () => {
             if (lesson.level === "A1") {
               return (
                 <div key={lesson._id}>
-                  <Link
+                <Link
                     className={alreadyLearned ? "text-warning" : ""}
-                    to={`/video-lesson/${lesson._id}`}
-                  >
-                   Watch SLesson: {lesson.lessonName}
-                  </Link>
-                  <Link
+                    to={`/lesson-content/${lesson._id}`}
+                    >
+                    Lesson: {lesson.lessonName}
+                    </Link>
+                    {' '}
+                    <Link
                     className={alreadyLearned ? "text-warning" : ""}
                     to={`/practice-sentence/${lesson._id}`}
-                  >
-                   Practice: {lesson.lessonName}
-                  </Link>
-                  <span className="ml-5">{alreadyLearned ? "100%" : ""}</span>
-                </div>
+                    >
+                    Practice:  {lesson.lessonName}
+                    </Link>
+                    <span className="ml-5">{alreadyLearned ? "100%" : ""}</span>
+                  </div>
               );
             }
           })}
@@ -67,20 +68,21 @@ const Home = () => {
                   : false;
               return (
                 <div key={lesson._id}>
-                                    <Link
+                <Link
                     className={alreadyLearned ? "text-warning" : ""}
-                    to={`/video-lesson/${lesson._id}`}
-                  >
-                   Watch SLesson: {lesson.lessonName}
-                  </Link>
-                  <Link
+                    to={`/lesson-content/${lesson._id}`}
+                    >
+                    Lesson: {lesson.lessonName}
+                    </Link>
+                    {' '}
+                    <Link
                     className={alreadyLearned ? "text-warning" : ""}
                     to={`/practice-sentence/${lesson._id}`}
-                  >
-                    {lesson.lessonName}
-                  </Link>
-                  <span className="ml-5">{alreadyLearned ? "100%" : ""}</span>
-                </div>
+                    >
+                    Practice:  {lesson.lessonName}
+                    </Link>
+                    <span className="ml-5">{alreadyLearned ? "100%" : ""}</span>
+                    </div>
               );
             }
           })}
@@ -101,9 +103,9 @@ const Home = () => {
                 <div key={lesson._id}>
                                     <Link
                     className={alreadyLearned ? "text-warning" : ""}
-                    to={`/video-lesson/${lesson._id}`}
+                    to={`/lesson-content/${lesson._id}`}
                   >
-                   Watch Lesson: {lesson.lessonName}
+                  Lesson: {lesson.lessonName}
                   </Link>
                   {' '}
                   <Link

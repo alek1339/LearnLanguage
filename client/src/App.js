@@ -27,7 +27,7 @@ import PracticeSentencesPage from "./components/pages/practice-sentences";
 import CreateProfile from "./components/auth/CreateProfile";
 import NoMatch from "./components/pages/NoMatch";
 import ProtectedRoute from "./components/common/PrivateRoute";
-import VideoLesson from "./components/pages/VideoLesson";
+import LessonContent from "./components/pages/LessonContent";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -111,8 +111,8 @@ class App extends Component {
                     element={<PracticeSentencesPage />}
                   />
                   <Route
-                    path="/video-lesson/:_id"
-                    element={<VideoLesson />}
+                    path="/lesson-content/:_id"
+                    element={<LessonContent />}
                   />
                   <Route path="*" element={<NoMatch />} />
                 </Routes>
