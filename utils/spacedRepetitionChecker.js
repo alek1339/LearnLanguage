@@ -23,14 +23,6 @@ const shouldRepeatLesson = (lesson) => {
   const daysSinceLastPractice = milisecondsToDays(timeSinceLastPractice);
   const daysToRepeat = daysToRepeatLesson[correctStrike];
   const shouldRepeat = daysSinceLastPractice > daysToRepeat;
-
-  console.log('correctStrike', correctStrike);
-  console.log('lastPracticed', lastPracticed);
-  console.log('now', now);
-  console.log('timeSinceLastPractice', timeSinceLastPractice);
-  console.log('daysSinceLastPractice', daysSinceLastPractice);
-  console.log('daysToRepeat', daysToRepeat);
-  console.log(shouldRepeat);
   return shouldRepeat;
 };
 
@@ -44,6 +36,11 @@ const daysToRepeatLesson = {
   7: 120
 }
 
+const millisecondsInSecond = 1000;
+const secondsInMinute = 60;
+const minutesInHour = 60;
+const hoursInDay = 24;
+
 const milisecondsToDays = (miliseconds) => {
-  return miliseconds / (1000 * 60 * 60 * 24);
+  return miliseconds / (millisecondsInSecond * secondsInMinute * minutesInHour * hoursInDay);
 }

@@ -1,9 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-const Audio = (src) => {
-  
-const soundFile = require("./Möchten Sie einen Kaffee.wav");
+const Audio = ({ src }) => {
+  const soundFile = require(`${src}`); // Load audio file using the src prop
   return (
     <div className="App">
       <audio controls>

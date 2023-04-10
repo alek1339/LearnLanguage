@@ -15,9 +15,6 @@ const Home = () => {
     dispatch(fetchLessons());
     dispatch(fetchProfile({ id: auth.user.id }));
   }, []);
-
-  console.log("lessons", profile);
-
   // Create component for each level and pass the level as props to the component
   // Then in the component, filter the lessons by the level and render them
 

@@ -157,9 +157,11 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
     navigate("/");
   }
 
+  const audioSrc = currentSentence.audio || './audio1.mp3';
+
   return (
     <div className="page-container">
-      <Audio src={currentSentence.audio} />
+      <Audio src={audioSrc} />
       <Row className="page-container__progress_container">
         <Col className="d-flex justify-content-center" xs={1}>
           <FontAwesomeIcon onClick={onCloseLesson} icon={faX} />
