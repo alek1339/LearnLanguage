@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Profile = require("../../models/Profile");
+const updateLessonRepetitionStatus = require("../../utils/spacedRepetitionChecker");
 
 // @route  GET api/profile/test
 // @desc Tests profile route
@@ -11,6 +12,10 @@ router.get("/test", (req, res) => res.json({ msg: "Profile Works" }));
 router.get("/", (req, res) => {
   Profile.findOne({ user_id: req.query.id })
     .then((profile) => {
+      const updatedProfile = {
+        ...profile,
+        learnedLessons: updateLessonRepetitionStatus(profile.learnedLessons)
+      }
       res.send(profile);
     })
     .catch((err) => res.json(err));
@@ -23,7 +28,6 @@ router.post("/add", (req, res) => {
       return res.status(400).json(errors);
     } else {
       const newProfile = new Profile({
-        firstName: req.body.firstName,
         lastName: req.body.lastName,
         img: req.body.img,
         user_id: req.body.user_id,
@@ -42,8 +46,8 @@ router.put("/update", (req, res) => {
     { $set: { learnedLessons: req.body.lesson } },
     { useFindAndModify: false }
   )
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+    .then((res) => r(res))
+    .catch((err) => res.send(err));
 });
 
 router.delete("/delete-profile", (req, res) => {

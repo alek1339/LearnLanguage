@@ -28,9 +28,12 @@ const LearnedLessonsSchema = new Schema({
         default: Date.now
     },
     lastPracticed: {
-        type: Date,
-        // default: Date.now
-    }
+        type: Date
+    },
+    shouldRepeat: {
+        type: Boolean,
+        default: false
+    },
 })
 
 module.exports = LearnedLessons = mongoose.model('LearnedLessons', LearnedLessonsSchema)
