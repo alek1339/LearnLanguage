@@ -27,6 +27,8 @@ import { useAppDispatch } from "../../../store";
 import Modal from "../../Modal";
 import { createPortal } from "react-dom";
 import { updateProfile } from "../../../actions/profileActions";
+import MissingWordWithAudio from "../../MissingWordWithAudio";
+import ListenWrite from "../../ListenWrite";
 
 const PracticeSentencesPage: IPracticeSentencesPage = () => {
   const dispatch = useAppDispatch();
@@ -48,6 +50,7 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
   const progressStep = 100 / currentLesson.sentences.length;
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const [playAudio, setPlayAudio] = useState(false);
 
   useEffect(() => {
     dispatch(setCurrentLesson(_id || ''));
@@ -81,26 +84,33 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
         currentSentence,
         currentLesson,
         setProgress,
-        setPercentageProgress
+        setPercentageProgress,
       });
 
-      var notTranslated = currentLesson.sentences.filter((obj) => {
-        return !updatedCorrectSentences.some(function (obj2) {
-          return obj.english == obj2.english;
+      setPlayAudio(true);
+
+      setTimeout(() => {
+        setPlayAudio(false);
+        var notTranslated = currentLesson.sentences.filter((obj) => {
+          return !updatedCorrectSentences.some(function (obj2) {
+            return obj.english == obj2.english;
+          });
         });
-      });
 
-      const nextIndex = indexForTranslation >= notTranslated.length ? 0 : indexForTranslation + 1;
-      setIndexForTranslation(nextIndex)
+        const nextIndex = indexForTranslation >= notTranslated.length ? 0 : indexForTranslation + 1;
+        setIndexForTranslation(nextIndex)
 
-      setForTranslation(notTranslated);
+        setForTranslation(notTranslated);
 
-      if (notTranslated && notTranslated.length > 0) {
-        const idx = notTranslated.length > nextIndex ? nextIndex : 0;
-        dispatch(setCurrentSentence(notTranslated[idx]));
-      } else {
-        onFinsishLesson()
-      }
+        if (notTranslated && notTranslated.length > 0) {
+          const idx = notTranslated.length > nextIndex ? nextIndex : 0;
+          dispatch(setCurrentSentence(notTranslated[idx]));
+        } else {
+          onFinsishLesson()
+        }
+      }, 2000);
+
+
 
     } else {
       setTranslation(currentSentence.german);
@@ -161,7 +171,7 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
 
   return (
     <div className="page-container">
-      <Audio src={audioSrc} />
+      <Audio src={audioSrc} play={playAudio} />
       <Row className="page-container__progress_container">
         <Col className="d-flex justify-content-center" xs={1}>
           <FontAwesomeIcon onClick={onCloseLesson} icon={faX} />
@@ -179,16 +189,25 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
 
       {/* TODO - add component for switching between levels */}
       {LessonsProgress.zeroLevel === correctStrike ?
-        <ConnectWords onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
-        : ''}
+        <ConnectWords audioSrc={audioSrc} onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
+        : <></>}
+
 
       {LessonsProgress.firstLevel === correctStrike ?
-        <MissingWord onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
-        : ''}
+        <MissingWordWithAudio /> : <></>}
 
-      {LessonsProgress.secondLevel <= correctStrike ?
+      {LessonsProgress.secondLevel === correctStrike ?
+        <MissingWord onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
+        : <></>}
+
+      {LessonsProgress.thirdLevel === correctStrike ?
+        <ListenWrite onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
+        : <></>}
+
+
+      {LessonsProgress.fourthLevel <= correctStrike ?
         <Translation onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
-        : ''}
+        : <></>}
 
       {translation !== '' ?
         <Row className="d-flex justify-content-center mistake-footer">

@@ -6,19 +6,21 @@ import { setCurrentTranslation } from "../../actions/practice/practiceSentencesA
 import { RootState } from '../../reducers';
 import { ISentence } from '../../types/Sentence';
 import PracticeBtns from '../PracticeBtns';
+import Audio from '../Audio/Audio';
 
 import './styles.scss';
 
-const ConnectWords: IConnectWords = ({ onSubmit, onContinue, showContinue }) => {
+const ConnectWords: IConnectWords = ({ onSubmit, onContinue, showContinue, audioSrc }) => {
   const dispatch = useAppDispatch();
   const [translationInput, setTranslationInput] = useState<Array<string>>(['']);
   const currentSentence: ISentence = useSelector((state: RootState) => state.practiceSentence);
   const [currentSentenceArray, setCurrentSentenceArray] = useState<Array<string>>([]);
+  const [playAudio, setPlayAudio] = useState(false);
 
   useEffect(() => {
     const germanToArr: Array<string> = currentSentence.german.replace(/,/g, '').replace(/\./g, '').split(' ');
     const commonWords: Array<string> = currentSentence.commonWords || [];
-    const sentenceAndCommonWords: Array<string> = [...germanToArr, ...commonWords]
+    const sentenceAndCommonWords: Array<string> = [...germanToArr, ...commonWords];
     let temp: Array<string> = sentenceAndCommonWords.sort((a, b) => 0.5 - Math.random());
     temp = temp.filter((word) => word !== '');
     setCurrentSentenceArray(temp);
@@ -43,6 +45,18 @@ const ConnectWords: IConnectWords = ({ onSubmit, onContinue, showContinue }) => 
     setCurrentSentenceArray([...currentSentenceArray, e.target.innerText]);
   }
 
+  const handleSubmit = () => {
+    onSubmit();
+
+  }
+
+  const handleOnContinue = () => {
+    console.log('onContinue');
+    setPlayAudio(true);
+    onContinue();
+
+  }
+
   return (
     <div className='connect-words'>
       <div className='translation'>
@@ -64,8 +78,9 @@ const ConnectWords: IConnectWords = ({ onSubmit, onContinue, showContinue }) => 
         }
       </div>
       <div>
-        <PracticeBtns showContinue={showContinue} onContinue={onContinue} onSubmit={onSubmit} />
+        <PracticeBtns showContinue={showContinue} onContinue={handleOnContinue} onSubmit={handleSubmit} />
       </div>
+      {/* <Audio src={audioSrc} play={playAudio} /> */}
     </div>
   );
 }
