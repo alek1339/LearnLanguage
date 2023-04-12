@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import { IPracticeBtns } from "./types";
 
 const PracticeBtns: IPracticeBtns = ({ showContinue, onContinue, onSubmit }) => {
+  console.log('showContinue', showContinue);
   return (
     <>
       {showContinue ?
