@@ -16,7 +16,7 @@ const animation = props =>
 
 export const ProgressBar = styled.div`
   animation: ${animation};
-  animation-duration: 4s;
+  animation-duration: 2s;
   height: 20px;
   background: ${props => props.color ? props.color : '#58cc02'};
   display: inline-block;

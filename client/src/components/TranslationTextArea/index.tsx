@@ -17,7 +17,7 @@ const TranslationTextArea: ITranslationTextArea = ({ onSubmit, resetTranslation,
       setTranslationInput('');
       setResetTranslation(false);
     }
-  }, [resetTranslation]);
+  }, [resetTranslation, setResetTranslation]);
 
   useEffect(() => {
     setTranslationInput('');
