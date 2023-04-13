@@ -27,6 +27,9 @@ import { useAppDispatch } from "../../../store";
 import Modal from "../../Modal";
 import { createPortal } from "react-dom";
 import { updateProfile } from "../../../actions/profileActions";
+import MissingWordWithAudio from "../../MissingWordWithAudio";
+import ListenWrite from "../../ListenWrite";
+import Answer from "../../Answer";
 
 const PracticeSentencesPage: IPracticeSentencesPage = () => {
   const dispatch = useAppDispatch();
@@ -43,11 +46,14 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
   const profile = useSelector((state: RootState) => state.profile);
   const learnedLesson = useSelector((state: RootState) => state.learnedLesson);
   const [correctStrike, setCorrectStrike] = useState(0);
+  const [showEnglishTranslation, setShowEnglishTranslation] = useState(true);
   const practiceTranslation = useSelector((state: RootState) => state.practiceTranslation);
   const progressBarWidth = 700;
   const progressStep = 100 / currentLesson.sentences.length;
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const [playAudio, setPlayAudio] = useState(false);
+  const [audioSrc, setAudioSrc] = useState('./audio1.mp3');
 
   useEffect(() => {
     dispatch(setCurrentLesson(_id || ''));
@@ -67,6 +73,12 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
       const currentLessonStrike = profile.learnedLessons?.find(l => l.lessonId === currentLesson._id)?.correctStrike;
       if (currentLessonStrike) {
         setCorrectStrike(currentLessonStrike);
+
+        if (currentLessonStrike === LessonsProgress.firstLevel || LessonsProgress.thirdLevel === correctStrike) {
+          setShowEnglishTranslation(false);
+        } else {
+          setShowEnglishTranslation(true);
+        }
       }
     }
 
@@ -81,7 +93,7 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
         currentSentence,
         currentLesson,
         setProgress,
-        setPercentageProgress
+        setPercentageProgress,
       });
 
       var notTranslated = currentLesson.sentences.filter((obj) => {
@@ -96,15 +108,30 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
       setForTranslation(notTranslated);
 
       if (notTranslated && notTranslated.length > 0) {
-        const idx = notTranslated.length > nextIndex ? nextIndex : 0;
-        dispatch(setCurrentSentence(notTranslated[idx]));
+        setAudioSrc('./audio-files/success1.mp3');
+        setPlayAudio(true);
+
+        setTimeout(() => {
+          const idx = notTranslated.length > nextIndex ? nextIndex : 0;
+          dispatch(setCurrentSentence(notTranslated[idx]));
+          setPlayAudio(false);
+        }, 1000);
+
       } else {
+        setAudioSrc('./audio-files/success2.mp3');
+        setPlayAudio(true);
         onFinsishLesson()
       }
 
     } else {
-      setTranslation(currentSentence.german);
-      setShowContinue(true);
+      setAudioSrc('./audio-files/error1.wav');
+      setPlayAudio(true);
+
+      setTimeout(() => {
+        setTranslation(currentSentence.german);
+        setShowContinue(true);
+        setPlayAudio(false);
+      }, 500);
     }
   }
 
@@ -153,15 +180,15 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
   }
 
   const onModalClose = () => {
+    setPlayAudio(false);
     setShowModal(false);
+    setPlayAudio(false);
     navigate("/");
   }
 
-  const audioSrc = currentSentence.audio || './audio1.mp3';
-
   return (
     <div className="page-container">
-      <Audio src={audioSrc} />
+      <Audio src={audioSrc} play={playAudio} />
       <Row className="page-container__progress_container">
         <Col className="d-flex justify-content-center" xs={1}>
           <FontAwesomeIcon onClick={onCloseLesson} icon={faX} />
@@ -171,33 +198,46 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
         </Col>
       </Row>
 
-      <Row className="d-flex justify-content-center">
-        <div className="sentence-container">
-          <span className="sentence w-auto">{currentSentence.english}</span>
-        </div>
-      </Row>
+      {
+        showEnglishTranslation ?
+          <Row className="d-flex justify-content-center">
+            <div className="sentence-container">
+              <span className="sentence w-auto">{currentSentence.english}</span>
+            </div>
+          </Row> : <></>
+      }
 
       {/* TODO - add component for switching between levels */}
       {LessonsProgress.zeroLevel === correctStrike ?
-        <ConnectWords onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
-        : ''}
+        <ConnectWords audioSrc={audioSrc} onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
+        : <></>}
 
       {LessonsProgress.firstLevel === correctStrike ?
-        <MissingWord onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
-        : ''}
+        <MissingWordWithAudio
+          onSubmit={onSubmit}
+          onContinue={handleOnContinue}
+          showContinue={showContinue}
+        /> : <></>}
 
-      {LessonsProgress.secondLevel <= correctStrike ?
+      {LessonsProgress.secondLevel === correctStrike ?
+        <MissingWord onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
+        : <></>}
+
+      {LessonsProgress.thirdLevel === correctStrike ?
+        <ListenWrite onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
+        : <></>}
+
+
+      {LessonsProgress.fourthLevel <= correctStrike ?
         <Translation onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
-        : ''}
+        : <></>}
 
       {translation !== '' ?
-        <Row className="d-flex justify-content-center mistake-footer">
-          {translation}
-        </Row> : ''
+        <Answer answer={translation} isCorrect={translation === ''} /> : ''
       }
+
       {showModal && createPortal(
         <Modal onClose={onModalClose}>
-          {/* TODO - add modal body component */}
           <h1>Nice Job</h1>
           <p>Continue with the hard work...</p>
         </Modal>,
