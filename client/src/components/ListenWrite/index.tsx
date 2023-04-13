@@ -16,6 +16,12 @@ const ListenWrite: ListenWriteProps = ({
   const [disablePlay, setDisablePlay] = useState(false);
   const [playAudio, setPlayAudio] = useState(false);
   const [audioSrc, setAudioSrc] = useState('./audio1.mp3');
+  const [resetTranslation, setResetTranslation] = useState(false);
+
+  const handleContinue = () => {
+    setResetTranslation(true); // set flag to reset TranslationTextArea state
+    onContinue(); // execute onContinue callback function passed as props
+  }
 
   useEffect(() => {
     if (currentSentence.audio) {
@@ -43,9 +49,9 @@ const ListenWrite: ListenWriteProps = ({
     <div>
       <button disabled={disablePlay} onClick={handlePlayAudio}>Play</button>
       <Audio play={playAudio} src={audioSrc} />
-      <TranslationTextArea onSubmit={onSubmit} />
+      <TranslationTextArea onSubmit={onSubmit} resetTranslation={resetTranslation} setResetTranslation={setResetTranslation} />
       <div>
-        <PracticeBtns showContinue={showContinue} onContinue={onContinue} onSubmit={onSubmit} />
+        <PracticeBtns showContinue={showContinue} onContinue={handleContinue} onSubmit={onSubmit} />
       </div>
     </div>
   )

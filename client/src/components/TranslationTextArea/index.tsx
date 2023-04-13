@@ -6,11 +6,18 @@ import { RootState } from '../../reducers';
 import { useAppDispatch } from '../../store';
 import { ISentence } from '../../types/Sentence';
 
-const TranslationTextArea: ITranslationTextArea = ({ onSubmit }) => {
+const TranslationTextArea: ITranslationTextArea = ({ onSubmit, resetTranslation, setResetTranslation }) => {
   const dispatch = useAppDispatch();
   const [translationInput, setTranslationInput] = useState('');
   const currentSentence: ISentence = useSelector((state: RootState) => state.practiceSentence);
   const [focusedClass, setFocusedClass] = useState('');
+
+  useEffect(() => {
+    if (resetTranslation) {
+      setTranslationInput('');
+      setResetTranslation(false);
+    }
+  }, [resetTranslation]);
 
   useEffect(() => {
     setTranslationInput('');

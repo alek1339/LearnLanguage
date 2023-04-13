@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ITranslation } from "./types";
 import PracticeBtns from '../PracticeBtns';
 import TranslationTextArea from '../TranslationTextArea';
@@ -6,11 +6,18 @@ import TranslationTextArea from '../TranslationTextArea';
 import './styles.scss';
 
 const Translation: ITranslation = ({ onSubmit, onContinue, showContinue }) => {
+  const [resetTranslation, setResetTranslation] = useState(false);
+
+  const handleContinue = () => {
+    setResetTranslation(true); // set flag to reset TranslationTextArea state
+    onContinue(); // execute onContinue callback function passed as props
+  }
+
   return (
     <div>
-      <TranslationTextArea onSubmit={onSubmit} />
+      <TranslationTextArea onSubmit={onSubmit} resetTranslation={resetTranslation} setResetTranslation={setResetTranslation} />
       <div className="d-flex justify-content-center">
-        <PracticeBtns showContinue={showContinue} onContinue={onContinue} onSubmit={onSubmit} />
+        <PracticeBtns showContinue={showContinue} onContinue={handleContinue} onSubmit={onSubmit} />
       </div>
     </div>
   );
