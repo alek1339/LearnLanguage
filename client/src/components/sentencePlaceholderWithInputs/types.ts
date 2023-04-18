@@ -3,6 +3,6 @@ import { ISentence } from "../../types/Sentence";
 
 export type SentencePlaceholderWithInputsProps = FC<{
   currentSentence: ISentence;
-  onSubmit: () => void;
-  sumbitBtnRef?: React.RefObject<HTMLButtonElement>;
+  submitBtnRef?: React.RefObject<HTMLButtonElement>;
+  continueBtnRef?: React.RefObject<HTMLButtonElement>;
 }>;

@@ -29,15 +29,18 @@ export const sentenceTraslationCheck = (sentence: ISentence, translation: ITrans
 
   if (translationInput === '') return false;
 
-  if (LessonsProgress.secondLevel > correctStrike) {
-    return german.trim() === translationInput.trim() ||
-      german2 === translationInput || german3 === translationInput;
-  }
-  else {
-    return compareSentences(german.trim(), translationInput.trim()) ||
-      compareSentences(german2.trim(), translationInput.trim()) ||
-      compareSentences(german3.trim(), translationInput.trim());
-  }
+  // if (LessonsProgress.secondLevel > correctStrike) {
+  //   return german.trim() === translationInput.trim() ||
+  //     german2 === translationInput || german3 === translationInput;
+  // }
+  // else {
+  //   return compareSentences(german.trim(), translationInput.trim()) ||
+  //     compareSentences(german2.trim(), translationInput.trim()) ||
+  //     compareSentences(german3.trim(), translationInput.trim());
+  // }
+
+  return german.trim() === translationInput.trim() ||
+    german2 === translationInput || german3 === translationInput;
 }
 
 export const compareSentences = (sentence: string, translation: string) => {

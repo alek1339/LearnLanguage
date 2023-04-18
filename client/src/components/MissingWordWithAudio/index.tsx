@@ -7,12 +7,11 @@ import PracticeBtns from '../PracticeBtns';
 import SentencePlaceholderWithInputs from '../sentencePlaceholderWithInputs';
 import Audio from '../Audio/Audio';
 
-const MissingWordWithAudio: MissingWordWithAudioProps = ({ onSubmit, onContinue, showContinue }) => {
+const MissingWordWithAudio: MissingWordWithAudioProps = ({ onSubmit, onContinue, showContinue, submitBtnRef, continueBtnRef }) => {
   const currentSentence: ISentence = useSelector((state: RootState) => state.practiceSentence);
   const [disablePlay, setDisablePlay] = useState(false);
   const [playAudio, setPlayAudio] = useState(false);
   const [audioSrc, setAudioSrc] = useState('./audio1.mp3');
-  const submitButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (currentSentence.audio) {
@@ -40,9 +39,9 @@ const MissingWordWithAudio: MissingWordWithAudioProps = ({ onSubmit, onContinue,
     <div className='missing-words'>
       <button disabled={disablePlay} onClick={handlePlayAudio}>Play</button>
       <Audio play={playAudio} src={audioSrc} />
-      <SentencePlaceholderWithInputs sumbitBtnRef={submitButtonRef} currentSentence={currentSentence} onSubmit={onSubmit} />
+      <SentencePlaceholderWithInputs submitBtnRef={submitBtnRef} currentSentence={currentSentence} />
       <div>
-        <PracticeBtns buttonRef={submitButtonRef} showContinue={showContinue} onContinue={onContinue} onSubmit={onSubmit} />
+        <PracticeBtns continueBtnRef={continueBtnRef} submitBtnRef={submitBtnRef} showContinue={showContinue} onContinue={onContinue} onSubmit={onSubmit} />
       </div>
     </div>
   )

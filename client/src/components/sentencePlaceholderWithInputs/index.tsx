@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { SentencePlaceholderWithInputsProps } from './types';
 import { useDispatch } from 'react-redux';
 
-const SentencePlaceholderWithInputs: SentencePlaceholderWithInputsProps = ({ currentSentence, onSubmit, sumbitBtnRef }) => {
+const SentencePlaceholderWithInputs: SentencePlaceholderWithInputsProps = ({ currentSentence, submitBtnRef, continueBtnRef }) => {
   const dispatch = useDispatch();
   const [currentSentenceArray, setCurrentSentenceArray] = useState<Array<string>>([]);
 
@@ -16,7 +16,7 @@ const SentencePlaceholderWithInputs: SentencePlaceholderWithInputsProps = ({ cur
       if (word.includes('{{') && word.includes('}}')) {
         const inputWidth = (word.length - brecketsLength) * pixelsPerLetter;
         temp[index] = (
-          <input onKeyDown={onPressKey} onChange={onInputChange} style={{ width: inputWidth }} />
+          <input autoFocus onKeyDown={onPressKey} onChange={onInputChange} style={{ width: inputWidth }} />
         );
       } else {
         temp[index] = word;
@@ -26,9 +26,12 @@ const SentencePlaceholderWithInputs: SentencePlaceholderWithInputsProps = ({ cur
   }, [currentSentence]);
 
   const onPressKey = (e: any) => {
+
     if (e.key === 'Enter') {
-      if (sumbitBtnRef?.current) {
-        sumbitBtnRef.current.click();
+      if (submitBtnRef?.current) {
+        submitBtnRef.current.click();
+      } else if (continueBtnRef?.current) {
+        continueBtnRef.current.click();
       }
     }
   }

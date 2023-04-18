@@ -8,14 +8,14 @@ import SentencePlaceholderWithInputsProps from '../sentencePlaceholderWithInputs
 
 import './styles.scss';
 
-const MissingWord: IMissingWord = ({ onSubmit, onContinue, showContinue }) => {
+const MissingWord: IMissingWord = ({ onSubmit, onContinue, showContinue, submitBtnRef, continueBtnRef }) => {
   const currentSentence: ISentence = useSelector((state: RootState) => state.practiceSentence);
 
   return (
     <div className='missing-words'>
-      <SentencePlaceholderWithInputsProps currentSentence={currentSentence} onSubmit={onSubmit} />
+      <SentencePlaceholderWithInputsProps submitBtnRef={submitBtnRef} continueBtnRef={continueBtnRef} currentSentence={currentSentence} />
       <div>
-        <PracticeBtns showContinue={showContinue} onContinue={onContinue} onSubmit={onSubmit} />
+        <PracticeBtns submitBtnRef={submitBtnRef} continueBtnRef={continueBtnRef} showContinue={showContinue} onContinue={onContinue} onSubmit={onSubmit} />
       </div>
     </div>
   )

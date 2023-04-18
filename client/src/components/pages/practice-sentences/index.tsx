@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Button, Col, Form, Row } from "react-bootstrap"
 import { IPracticeSentencesPage } from "./types"
 import './styles.scss';
@@ -54,6 +54,8 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
   const navigate = useNavigate();
   const [playAudio, setPlayAudio] = useState(false);
   const [audioSrc, setAudioSrc] = useState('./audio1.mp3');
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const continueButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     dispatch(setCurrentLesson(_id || ''));
@@ -85,6 +87,7 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
   }, [currentLesson]);
 
   const onSubmit = () => {
+    console.log(sentenceTraslationCheck(currentSentence, practiceTranslation, correctStrike))
     if (practiceTranslation !== '' && sentenceTraslationCheck(currentSentence, practiceTranslation, correctStrike)) {
       const updatedCorrectSentences = updateProgress({
         progress,
@@ -217,10 +220,17 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
           onSubmit={onSubmit}
           onContinue={handleOnContinue}
           showContinue={showContinue}
+          submitBtnRef={submitButtonRef}
+          continueBtnRef={continueButtonRef}
         /> : <></>}
 
       {LessonsProgress.secondLevel === correctStrike ?
-        <MissingWord onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
+        <MissingWord
+          onSubmit={onSubmit}
+          onContinue={handleOnContinue}
+          showContinue={showContinue}
+          submitBtnRef={submitButtonRef}
+          continueBtnRef={continueButtonRef} />
         : <></>}
 
       {LessonsProgress.thirdLevel === correctStrike ?
