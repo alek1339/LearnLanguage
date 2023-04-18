@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { SentencePlaceholderWithInputsProps } from './types';
 import { useDispatch } from 'react-redux';
 
-const SentencePlaceholderWithInputs: SentencePlaceholderWithInputsProps = ({ currentSentence, onSubmit }) => {
+const SentencePlaceholderWithInputs: SentencePlaceholderWithInputsProps = ({ currentSentence, onSubmit, sumbitBtnRef }) => {
   const dispatch = useDispatch();
   const [currentSentenceArray, setCurrentSentenceArray] = useState<Array<string>>([]);
 
@@ -16,7 +16,7 @@ const SentencePlaceholderWithInputs: SentencePlaceholderWithInputsProps = ({ cur
       if (word.includes('{{') && word.includes('}}')) {
         const inputWidth = (word.length - brecketsLength) * pixelsPerLetter;
         temp[index] = (
-          <input onChange={onInputChange} style={{ width: inputWidth }} />
+          <input onKeyDown={onPressKey} onChange={onInputChange} style={{ width: inputWidth }} />
         );
       } else {
         temp[index] = word;
@@ -25,11 +25,15 @@ const SentencePlaceholderWithInputs: SentencePlaceholderWithInputsProps = ({ cur
     setCurrentSentenceArray(temp);
   }, [currentSentence]);
 
-  const onInputChange = (e: any) => {
+  const onPressKey = (e: any) => {
     if (e.key === 'Enter') {
-      e.preventDefault();
-      onSubmit();
+      if (sumbitBtnRef?.current) {
+        sumbitBtnRef.current.click();
+      }
     }
+  }
+
+  const onInputChange = (e: any) => {
     let translatedResult: any = currentSentence.germanWithHiddenPart?.split(' ');
 
     translatedResult?.forEach((word: any, index: number) => {
@@ -37,7 +41,6 @@ const SentencePlaceholderWithInputs: SentencePlaceholderWithInputsProps = ({ cur
         translatedResult[index] = e.target.value;
       }
     })
-
     dispatch({ type: 'SET_CURRENT_TRANSLATION', payload: translatedResult.join(' ') });
   }
   return (

@@ -7,8 +7,8 @@ const initialState: ICurrentTranslation = { translation: '' };
 export default function (state = initialState, action: SetCurrentTranslationAction) {
   switch (action.type) {
     case PracticeActionTypes.SET_CURRENT_TRANSLATION:
-      return { ...state, translation: action.payload }
+      return { ...state, translation: action.payload };
     default:
-      return state
+      return state;
   }
 }

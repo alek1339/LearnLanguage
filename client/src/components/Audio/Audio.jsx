@@ -5,7 +5,6 @@ const Audio = ({ src, play }) => {
   const soundFile = require(`${src}`); // Load audio file using the src prop
   const audioPLayer = React.useRef(null); // Reference to the audio element
   const [isPlaying, setIsPlaying] = useState(false); // State to keep track of whether the audio is playing or not
-  console.log(play)
   useEffect(() => {
     if (play) {
       playAudio();

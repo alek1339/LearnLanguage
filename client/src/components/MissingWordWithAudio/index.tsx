@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { MissingWordWithAudioProps } from './types';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../reducers';
@@ -12,6 +12,7 @@ const MissingWordWithAudio: MissingWordWithAudioProps = ({ onSubmit, onContinue,
   const [disablePlay, setDisablePlay] = useState(false);
   const [playAudio, setPlayAudio] = useState(false);
   const [audioSrc, setAudioSrc] = useState('./audio1.mp3');
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (currentSentence.audio) {
@@ -39,9 +40,9 @@ const MissingWordWithAudio: MissingWordWithAudioProps = ({ onSubmit, onContinue,
     <div className='missing-words'>
       <button disabled={disablePlay} onClick={handlePlayAudio}>Play</button>
       <Audio play={playAudio} src={audioSrc} />
-      <SentencePlaceholderWithInputs currentSentence={currentSentence} onSubmit={onSubmit} />
+      <SentencePlaceholderWithInputs sumbitBtnRef={submitButtonRef} currentSentence={currentSentence} onSubmit={onSubmit} />
       <div>
-        <PracticeBtns showContinue={showContinue} onContinue={onContinue} onSubmit={onSubmit} />
+        <PracticeBtns buttonRef={submitButtonRef} showContinue={showContinue} onContinue={onContinue} onSubmit={onSubmit} />
       </div>
     </div>
   )

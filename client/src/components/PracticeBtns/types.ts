@@ -4,4 +4,5 @@ export type IPracticeBtns = FC<{
   onSubmit: () => void;
   onContinue: () => void;
   showContinue: boolean;
+  buttonRef?: React.RefObject<HTMLButtonElement>;
 }>;
