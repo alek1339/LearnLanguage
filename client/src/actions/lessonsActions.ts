@@ -23,3 +23,32 @@ export const fetchLessons = () => (dispatch: Dispatch) => {
     }))
     .catch(err => console.log(err))
 }
+
+export const fetchLesson = (id: string) => (dispatch: Dispatch) => {
+  axios.get(`/lessons/current/${id}`)
+    .then(res => dispatch({
+      type: ActionTypes.FETCH_LESSON,
+      payload: res.data
+    }))
+    .catch(err => {
+      if (err.response && err.response.status === 404) {
+        // Handle 404 error, e.g. show error message to user
+        console.log('Lesson not found:', err.response.data); // Log error response data
+      } else {
+        // Handle other errors
+        console.log('Error fetching lesson:', err);
+      }
+    });
+};
+
+export const updateLesson = (id: string, lessonData: ILesson) => (dispatch: Dispatch) => {
+  axios
+    .put(`/lessons/update/${id}`, lessonData)
+    .then(res => alert('lesson was updated successfully!'))
+    .catch(err =>
+      dispatch({
+        type: ActionTypes.GET_ERRORS,
+        payload: err.response.data
+      })
+    )
+};

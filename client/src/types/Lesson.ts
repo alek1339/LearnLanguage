@@ -2,6 +2,7 @@ import { ISentence } from "./Sentence"
 
 export type ILesson = {
   lessonName: string,
+  part?: string,
   videoLesson?: string,
   textLesson?: string,
   sentences: Array<ISentence>,

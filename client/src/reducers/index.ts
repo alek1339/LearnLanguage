@@ -5,6 +5,7 @@ import sentencesReducer from './sentencesReducer';
 import wordsReducer from './wordsReducer/wordsReducer';
 import questionsReducer from './questionsReducer';
 import lessonsReducer from './lessonsReducer';
+import lessonReducer from './lessonReducer';
 import practiceSentenceReducer from './practice/practiceSentenceReducer';
 import practiceLessonReducer from './practice/practiceLessonReducer';
 import profileReducer from './profileReducer/profileReducer';
@@ -18,6 +19,7 @@ export const rootReducer = combineReducers({
     sentences: sentencesReducer,
     questions: questionsReducer,
     lessons: lessonsReducer,
+    lesson: lessonReducer,
     practiceSentence: practiceSentenceReducer,
     practiceLesson: practiceLessonReducer,
     practiceTranslation: practiceTranslationReducer,
