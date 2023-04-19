@@ -31,6 +31,7 @@ const NewLesson: INewLesson = () => {
       lessonName: '',
       videoLesson: '',
       sentenceInput: '',
+      lessonPart: ''
     },
     onSubmit: () => { }
   });
@@ -75,6 +76,7 @@ const NewLesson: INewLesson = () => {
       sentences: sentenceArrObjs,
       lessonName: inputs.lessonName,
       videoLesson: inputs.videoLesson,
+      part: inputs.lessonPart
     };
 
     resetInputs();
@@ -181,6 +183,17 @@ const NewLesson: INewLesson = () => {
             />
             <span>{lessonNameError}</span>
           </div>
+
+          <div className="inputs-container">
+            <input
+              id="lesson-part"
+              placeholder="Lesson Part"
+              name="lessonPart"
+              value={inputs.lessonPart}
+              onChange={(e) => handleInputChange(e)}
+            />
+          </div>
+
           <div
             className="level-select"
             onClick={() => setShowLevelsOpts(!showLevelsOpts)}

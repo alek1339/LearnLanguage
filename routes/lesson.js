@@ -38,6 +38,7 @@ router.post("/add", (req, res) => {
         words: req.body.words,
         level: req.body.level,
         img: req.body.img,
+        part: req.body.part,
       });
 
       newLesson
