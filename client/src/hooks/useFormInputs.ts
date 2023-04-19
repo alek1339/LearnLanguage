@@ -25,7 +25,11 @@ function useFormInputs<T>({ initialValues, onSubmit }: IUseFormInputs<T>) {
     setInputs(initialValues);
   };
 
-  return { inputs, handleSubmit, handleInputChange, resetInputs };
+  const setNewInputValues = (newValues: T) => {
+    setInputs(newValues);
+  };
+
+  return { inputs, handleSubmit, handleInputChange, resetInputs, setNewInputValues };
 }
 
 export default useFormInputs;

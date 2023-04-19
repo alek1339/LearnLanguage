@@ -6,6 +6,7 @@ import AdminNav from '../AdminNav'
 import { RootState } from '../../reducers';
 import { IAdminPage } from './types';
 import { fetchLessons } from '../../actions/lessonsActions';
+import { Link } from 'react-router-dom';
 
 const AdminPage: IAdminPage = () => {
   const dispatch = useAppDispatch();
@@ -22,7 +23,8 @@ const AdminPage: IAdminPage = () => {
         <ul>
           {lessons.map((lesson) => (
             <li key={lesson._id}>
-              <a href={`/admin/add-lesson/${lesson._id}`}>{lesson.lessonName}</a>
+              <Link to={`/admin/edit-lesson/${lesson._id}`}>{lesson.lessonName}
+              </Link>
             </li>
           ))}
         </ul>

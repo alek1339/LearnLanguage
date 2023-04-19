@@ -16,13 +16,14 @@ router.get("/", (req, res) => {
     .catch((err) => res.json(err));
 });
 
-router.get("/current:id", (req, res) => {
-  Lesson.findOne({ _id: req.query.id })
+router.get("/current/:id", (req, res) => {
+  Lesson.findOne({ _id: req.params.id }) // Update to use req.params.id
     .then((lesson) => {
       res.send(lesson);
     })
     .catch((err) => res.json(err));
 });
+
 
 router.post("/add", (req, res) => {
   Lesson.findOne({ lessonName: req.body.lessonName }).then((lesson) => {
@@ -49,9 +50,11 @@ router.post("/add", (req, res) => {
   });
 });
 
-router.put("/update", (req, res) => {
+router.put("/update/:id", (req, res) => {
+  const lessonId = req.params.id; // Get the lesson id from the URL parameter
+
   Lesson.findOneAndUpdate(
-    { lessonName: req.body.lessonName },
+    { _id: lessonId }, // Use _id instead of lessonName
     {
       videoLesson: req.body.videoLesson,
       img: req.body.img,
@@ -59,11 +62,20 @@ router.put("/update", (req, res) => {
       sentences: req.body.sentences,
       level: req.body.level,
       words: req.body.words,
+      part: req.body.part,
     },
-    { new: false }
+    { new: true } // Return the updated document
   )
-    .then(res.status(200).json({ message: "Successful Update" }))
-    .catch((err) => res.send(err));
+    .then(updatedLesson => {
+      if (updatedLesson) {
+        res.status(200).json({ message: "Successful Update", lesson: updatedLesson });
+      } else {
+        res.status(404).json({ message: "Lesson not found" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Failed to update lesson", error: err.message });
+    });
 });
 
 router.delete("/delete-lesson", (req, res) => {

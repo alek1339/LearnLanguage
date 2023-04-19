@@ -15,7 +15,8 @@ import Footer from "./components/Footer/Footer";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import AdminPage from "./admin/AdminPage";
-import AddLesson from "./admin/AddLesson"
+import AddLesson from "./admin/AddLesson";
+import EditLesson from "./admin/EditLesson";
 
 import { Provider } from "react-redux";
 
@@ -79,6 +80,14 @@ class App extends Component {
                     element={
                       <ProtectedRoute>
                         <AddLesson />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin/edit-lesson/:_id"
+                    element={
+                      <ProtectedRoute>
+                        <EditLesson />
                       </ProtectedRoute>
                     }
                   />
