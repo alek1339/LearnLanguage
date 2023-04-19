@@ -20,7 +20,7 @@ const AddSentence: IAddSentence = () => {
   const [german2, setGerman2] = useState('');
   const [german3, setGerman3] = useState('');
   const [germanWithHiddenPart, setGermanWithHiddenPart] = useState('');
-  const [commonWords, setCommonWords] = useState(['']);
+  const [commonWords, setCommonWords] = useState('');
   const [bulgarian, setBulgarian] = useState('');
   const [img, setImg] = useState('');
   const [audio, setAudio] = useState('');
@@ -35,17 +35,18 @@ const AddSentence: IAddSentence = () => {
     setBulgarian('');
     setImg('');
     setGermanWithHiddenPart('');
-    setCommonWords(['']);
+    setCommonWords('');
   }
 
   const onSubmit = () => {
+    const commonWordsArr = commonWords.split(',')
     const newSentence: ISentence = {
       english,
       german,
       german2,
       german3,
       germanWithHiddenPart,
-      commonWords,
+      commonWords: commonWordsArr,
       bulgarian,
       img,
       audio,
@@ -94,7 +95,7 @@ const AddSentence: IAddSentence = () => {
           <input placeholder="German 2" value={german2} onChange={(e) => setGerman2(e.target.value)} />
           <input placeholder="German 3" value={german3} onChange={(e) => setGerman3(e.target.value)} />
           <input placeholder="German with hidden part" value={germanWithHiddenPart} onChange={(e) => setGermanWithHiddenPart(e.target.value)} />
-          <input placeholder="Common words" value={commonWords} onChange={(e) => setCommonWords((alreadyAdded) => [...alreadyAdded, e.target.value])} />
+          <input placeholder="Common words" value={commonWords} onChange={(e) => setCommonWords(e.target.value)} />
           <input placeholder="Bulgarian" value={bulgarian} onChange={(e) => setBulgarian(e.target.value)} />
           <input placeholder="Image" value={img} onChange={(e) => setImg(e.target.value)} />
           <input placeholder="Audio" value={audio} onChange={(e) => setAudio(e.target.value)} />

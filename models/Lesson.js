@@ -43,6 +43,10 @@ const LessonSchema = new Schema({
     type: Date,
     // default: Date.now
   },
+  part: {
+    type: String,
+    required: false,
+  },
 });
 
 module.exports = lesson = mongoose.model("Lessons", LessonSchema);

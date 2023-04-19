@@ -34,6 +34,10 @@ const LearnedLessonsSchema = new Schema({
         type: Boolean,
         default: false
     },
+    part: {
+        type: String,
+        required: false
+    }
 })
 
 module.exports = LearnedLessons = mongoose.model('LearnedLessons', LearnedLessonsSchema)

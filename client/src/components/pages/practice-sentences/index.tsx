@@ -87,7 +87,6 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
   }, [currentLesson]);
 
   const onSubmit = () => {
-    console.log(sentenceTraslationCheck(currentSentence, practiceTranslation, correctStrike))
     if (practiceTranslation !== '' && sentenceTraslationCheck(currentSentence, practiceTranslation, correctStrike)) {
       const updatedCorrectSentences = updateProgress({
         progress,
