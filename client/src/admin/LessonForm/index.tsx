@@ -17,6 +17,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import DOMPurify from 'dompurify';
 import { ILessonForm } from "./types";
+import InputSelect from "../InputSelect";
 
 const LessonForm: ILessonForm = ({ lesson, onSubmit }) => {
   const dispatch = useAppDispatch();
@@ -276,25 +277,12 @@ const LessonForm: ILessonForm = ({ lesson, onSubmit }) => {
         </div>
 
         <div className="grid mb-32">
-          <input
-            id="word-input"
-            name="sentenceInput"
-            onChange={(e) => onSentenceInputChange(e)}
-            value={inputs.sentenceInput}
+          <InputSelect
+            onInputChange={(e: any) => onSentenceInputChange(e)}
+            inputs={inputs}
+            filtered={filteredSentences}
+            onSelect={selectSentence}
           />
-          <div>
-            {filteredSentences.length > 0 && inputs.sentenceInput.length > 0 ? (
-              <div className="dropdown">
-                <List
-                  elements={filteredSentences.map(s => s.german)}
-                  onClick={selectSentence}
-                  className='list-all-words'
-                />
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
           <label
             htmlFor="word-input"
             className="primary-btn"

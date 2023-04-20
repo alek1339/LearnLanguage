@@ -17,6 +17,7 @@ import Login from "./components/auth/Login";
 import AdminPage from "./admin/AdminPage";
 import AddLesson from "./admin/AddLesson";
 import EditLesson from "./admin/EditLesson";
+import Sentences from "./admin/Sentences";
 
 import { Provider } from "react-redux";
 
@@ -72,6 +73,14 @@ class App extends Component {
                     element={
                       <ProtectedRoute>
                         <AdminPage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin/sentences"
+                    element={
+                      <ProtectedRoute>
+                        <Sentences />
                       </ProtectedRoute>
                     }
                   />

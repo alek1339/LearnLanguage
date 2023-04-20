@@ -11,6 +11,7 @@ export type ISentence = {
   audio?: string,
   commonWords: Array<string>,
   germanWithHiddenPart?: string;
+  _id?: string,
 }
 
 export const ISentenceInitialState: ISentence = {
