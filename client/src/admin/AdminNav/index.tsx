@@ -23,6 +23,7 @@ const AdminNav: IAdminNav = () => {
 
       <div className='admin-nav'>
         <Nav.Link className={location.pathname.endsWith('admin') ? "primary-btn active-btn" : 'primary-btn'} href='/admin'>{' '}Lessons</Nav.Link>
+        <Nav.Link className={location.pathname.endsWith('admin') ? "primary-btn active-btn" : 'primary-btn'} href='/admin/sentences'>{' '}Sentences</Nav.Link>
         <Nav.Link className={location.pathname.endsWith('add-lesson') ? "primary-btn active-btn" : 'primary-btn'} href='/admin/add-lesson'>{' '}New Lesson</Nav.Link>
         <Nav.Link className={location.pathname.endsWith('add-word') ? "primary-btn active-btn" : 'primary-btn'} href='/admin/add-word'>{' '}New Word</Nav.Link>
         <Nav.Link className={location.pathname.endsWith('add-sentence') ? "primary-btn active-btn" : 'primary-btn'} href='/admin/add-sentence'>{' '}New Sentence</Nav.Link>

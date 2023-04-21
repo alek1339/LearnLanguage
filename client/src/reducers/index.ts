@@ -11,12 +11,14 @@ import practiceLessonReducer from './practice/practiceLessonReducer';
 import profileReducer from './profileReducer/profileReducer';
 import learnedLessonReducer from './learnedLessonReducer';
 import practiceTranslationReducer from './practice/practiceTranslationReducer';
+import sentenceReducer from './sentenceReducer';
 
 export const rootReducer = combineReducers({
     auth: authReducer,
     errors: errorReducer,
     words: wordsReducer,
     sentences: sentencesReducer,
+    sentence: sentenceReducer,
     questions: questionsReducer,
     lessons: lessonsReducer,
     lesson: lessonReducer,

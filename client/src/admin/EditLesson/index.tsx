@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { IEditLesson } from './types';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../store';
 import { fetchLesson, updateLesson } from '../../actions/lessonsActions';
 import { useSelector } from 'react-redux';
@@ -12,18 +12,19 @@ const EditLesson: IEditLesson = () => {
   const dispatch = useAppDispatch();
   const { _id } = useParams();
   const lesson: ILesson = useSelector((state: RootState) => state.lesson);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (_id) {
       dispatch(fetchLesson(_id))
     }
-    console.log(lesson);
   }, [_id]);
 
   const onSubmit = (updatedLesson: ILesson) => {
     if (_id) {
       dispatch(updateLesson(_id, updatedLesson));
     }
+    navigate('/admin');
   }
 
   return (
