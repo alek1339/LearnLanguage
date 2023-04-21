@@ -1,6 +1,6 @@
 import { ActionTypes } from '../enums/actionTypes'
 import { ISentence } from '../types/Sentence'
-import { FetchSentenceAction } from '../types/SentenceActions'
+import { FetchSentencesAction } from '../types/SentenceActions'
 
 const initialState: Array<ISentence> = [
   {
@@ -9,7 +9,7 @@ const initialState: Array<ISentence> = [
     commonWords: [''],
   }]
 
-export default function (state = initialState, action: FetchSentenceAction) {
+export default function (state = initialState, action: FetchSentencesAction) {
   switch (action.type) {
     case ActionTypes.FETCH_SENTENCES:
       return action.payload

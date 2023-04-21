@@ -17,6 +17,18 @@ router.get('/', (req, res) => {
         .catch(err => res.json(err));
 })
 
+router.get("/current/:id", (req, res) => {
+    const id = req.params.id.replace("}", "");
+
+    Sentence.findOne({ _id: id })
+        .then((sentence) => {
+            res.send(sentence);
+        })
+        .catch((err) => {
+            res.json(err)
+        });
+});
+
 router.post('/add', (req, res) => {
     Sentence.findOne({ english: req.body.english })
         .then(sentence => {
@@ -45,16 +57,31 @@ router.post('/add', (req, res) => {
         })
 })
 
-router.put('/update', (req, res) => {
+router.put('/update/:id', (req, res) => {
+    // Use req.params.id to get the sentence ID from the URL
+    const sentenceId = req.params.id;
 
-    Sentence.findOneAndUpdate({ english: req.body.english }, {
+    // Use req.body to get the updated sentence data from the request body
+    const updatedSentenceData = {
+        english: req.body.english,
         german: req.body.german,
+        german2: req.body.german2,
+        german3: req.body.german3,
+        bulgarian: req.body.bulgarian,
         img: req.body.img,
-    },
-        { new: false })
-        .then(res.status(200).json({ message: "Successful Update" }))
+        audio: req.body.audio,
+        germanWithHiddenPart: req.body.germanWithHiddenPart,
+        commonWords: req.body.commonWords,
+    };
+
+    // Use findOneAndUpdate to update the sentence by ID
+    Sentence.findOneAndUpdate({ _id: sentenceId }, updatedSentenceData, { new: false })
+        .then(() => {
+            res.status(200).json({ message: "Successful Update" });
+        })
         .catch(err => res.send(err));
 });
+
 
 router.delete("/delete-sentence", (req, res) => {
 

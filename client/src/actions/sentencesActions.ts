@@ -23,3 +23,35 @@ export const fetchSentences = () => (dispatch: Dispatch) => {
     }))
     .catch(err => console.log(err))
 }
+
+export const fetchSentence = (id: string) => (dispatch: Dispatch) => {
+  axios.get(`/sentences/current/${id}`)
+    .then(res => dispatch({
+      type: ActionTypes.FETCH_SENTENCE,
+      payload: res.data
+    }))
+    .catch(err => {
+      if (err.response && err.response.status === 404) {
+        // Handle 404 error, e.g. show error message to user
+        console.log('Sentence not found:', err.response.data); // Log error response data
+      } else {
+        // Handle other errors
+        console.log('Error fetching sentence:', err);
+      }
+    });
+};
+
+export const updateSentence = (id: string, sentencesData: ISentence) => (dispatch: Dispatch) => {
+  axios
+    .put(`/sentences/update/${id}`, sentencesData)
+    .then(res => alert('Sentence was updated successfully!'))
+    .catch(err => {
+      if (err.response && err.response.status === 404) {
+        // Handle 404 error, e.g. show error message to user
+        console.log('Sentence not found:', err.response.data); // Log error response data
+      } else {
+        // Handle other errors
+        console.log('Error updating sentence:', err);
+      }
+    });
+};

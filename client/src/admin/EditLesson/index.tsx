@@ -18,7 +18,6 @@ const EditLesson: IEditLesson = () => {
     if (_id) {
       dispatch(fetchLesson(_id))
     }
-    console.log(lesson);
   }, [_id]);
 
   const onSubmit = (updatedLesson: ILesson) => {

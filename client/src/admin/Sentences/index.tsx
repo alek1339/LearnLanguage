@@ -23,11 +23,9 @@ const Sentences = () => {
 
 
   const onSelect = (e: any) => {
-    console.log(e)
-
     const selectedSentence = sentences.find((s) => s.german === e);
     const id = selectedSentence?._id || '';
-    navigate(`/admin/edit-sentence/${id}}`);
+    navigate(`/admin/edit-sentence/${id}`);
   }
 
   useEffect(() => {
