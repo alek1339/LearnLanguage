@@ -16,14 +16,24 @@ router.get("/", (req, res) => {
     .catch((err) => res.json(err));
 });
 
-router.get("/current/:id", (req, res) => {
-  console.log(req.params.id)
-  Lesson.findOne({ _id: req.params.id }) // Update to use req.params.id
+router.get("/current", (req, res) => {
+  const id = req.query.id;
+  Lesson.findOne({ _id: id })
     .then((lesson) => {
-      res.send(lesson);
+      if (lesson) {
+        // Send the found lesson as a response
+        res.send(lesson);
+      } else {
+        // Send a 404 error response when the lesson is not found
+        res.status(404).send("Lesson not found");
+      }
     })
-    .catch((err) => res.json(err));
+    .catch((err) => {
+      // Handle any other errors and send an appropriate response
+      res.status(500).send("Error fetching lesson: " + err);
+    });
 });
+
 
 
 router.post("/add", (req, res) => {

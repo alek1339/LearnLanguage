@@ -4,7 +4,6 @@ import { ILesson } from '../../types/Lesson';
 import axios from 'axios';
 
 export const setCurrentLesson = (id: string) => (dispatch: Dispatch) => {
-  console.log('setCurrentLesson action called');
   axios.get(`/lessons/current`, { params: { id: id } })
     .then((res) => {
       console.log('setCurrentLesson  inside', res.data);
