@@ -1,0 +1,9 @@
+.home-container {
+  display: grid;
+  grid-template-columns: 4fr 12fr;
+
+  .main-content {
+    margin-left: 4.5%;
+    margin-right: 4.5%;
+  }
+}

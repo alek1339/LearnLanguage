@@ -25,6 +25,7 @@ export const fetchLessons = () => (dispatch: Dispatch) => {
 }
 
 export const fetchLesson = (id: string) => (dispatch: Dispatch) => {
+  console.log('fetchLesson action called with id:', id)
   axios.get(`/lessons/current/${id}`)
     .then(res => dispatch({
       type: ActionTypes.FETCH_LESSON,

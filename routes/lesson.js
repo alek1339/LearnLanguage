@@ -17,6 +17,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/current/:id", (req, res) => {
+  console.log(req.params.id)
   Lesson.findOne({ _id: req.params.id }) // Update to use req.params.id
     .then((lesson) => {
       res.send(lesson);

@@ -10,7 +10,7 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 
 import MyNavbar from "./components/Navbar/index.tsx";
 
-import Home from "./components/Home";
+import Home from "./components/pages/Home";
 import Footer from "./components/Footer/Footer";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
@@ -57,11 +57,11 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            <header className="App-header">
+            {/* <header className="App-header">
               <nav>
                 <MyNavbar />
               </nav>
-            </header>
+            </header> */}
             <main>
               <div className="main-content">
                 <Routes>
@@ -145,7 +145,7 @@ class App extends Component {
                 </Routes>
               </div>
             </main>
-            <Footer />
+            {/* <Footer /> */}
           </div>
         </Router>
       </Provider>
