@@ -25,7 +25,7 @@ export const fetchLessons = () => (dispatch: Dispatch) => {
 }
 
 export const fetchLesson = (id: string) => (dispatch: Dispatch) => {
-  axios.get(`/lessons/current/${id}`)
+  axios.get(`/lessons/current`, { params: { id: id } })
     .then(res => dispatch({
       type: ActionTypes.FETCH_LESSON,
       payload: res.data

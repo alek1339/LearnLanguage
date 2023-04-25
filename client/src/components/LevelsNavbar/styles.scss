@@ -1,0 +1,24 @@
+@import "../../styles/colors.scss";
+
+.levels-navigation-container {
+
+  .levels-navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 4.5%;
+    margin-right: 9%;
+    margin-top: 56px;
+  
+    button {
+      background: unset;
+      cursor: pointer;
+    }
+    .levels-links {
+      color: $grey-text; 
+  
+      &__active { 
+        border-bottom: 5px solid $orange; 
+      }
+    }
+  }
+}
