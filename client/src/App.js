@@ -19,6 +19,7 @@ import AddLesson from "./admin/AddLesson";
 import EditLesson from "./admin/EditLesson";
 import Sentences from "./admin/Sentences";
 import EditSentence from "./admin/EditSentence";
+import LessonPage from "./components/pages/LessonPage";
 
 import { Provider } from "react-redux";
 
@@ -57,11 +58,6 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            {/* <header className="App-header">
-              <nav>
-                <MyNavbar />
-              </nav>
-            </header> */}
             <main>
               <div className="main-content">
                 <Routes>
@@ -145,7 +141,6 @@ class App extends Component {
                 </Routes>
               </div>
             </main>
-            {/* <Footer /> */}
           </div>
         </Router>
       </Provider>

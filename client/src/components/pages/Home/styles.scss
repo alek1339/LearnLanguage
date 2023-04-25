@@ -1,9 +1,18 @@
+@import "../../../styles/colors.scss";
+
 .home-container {
   display: grid;
   grid-template-columns: 4fr 12fr;
 
   .main-content {
-    margin-left: 4.5%;
-    margin-right: 4.5%;
+
+    .lessons-view {
+      width: 100%;
+      margin-top: 1.125rem;
+      padding-top: 2.3rem;
+
+      
+      background-color: $backgound-grey;
+    }
   }
 }

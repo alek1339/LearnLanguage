@@ -1,0 +1,19 @@
+.lesson-page-container {
+  margin-left: 4.5%;
+  margin-right: 9%;
+  
+  nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .go-back-btn {
+      background: unset;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

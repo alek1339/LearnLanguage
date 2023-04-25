@@ -6,4 +6,6 @@ export type ILevel = FC<{
   level: string;
   lessons: ILesson[];
   profile: IProfile;
+  setCurrentView: (view: string) => void;
+  setOpenedLesson: (lesson: string) => void;
 }>

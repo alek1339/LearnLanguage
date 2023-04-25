@@ -6,8 +6,10 @@ import { fetchProfile } from "../../../actions/profileActions";
 import Sidebar from "../../Sidebar";
 import LevelsNavbar from "../../LevelsNavbar";
 import Level from "../../Level";
+import { LessonViews } from "../../../enums/lessonViews";
 
 import "./styles.scss";
+import LessonPage from "../LessonPage";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -15,6 +17,8 @@ const Home = () => {
   const auth = useSelector((state) => state.auth);
   const profile = useSelector((state) => state.profile);
   const [level, setLevel] = useState("A1");
+  const [currentView, setCurrentView] = useState(LessonViews.All);
+  const [openedLesson, setOpenedLesson] = useState('');
 
   useEffect(() => {
     dispatch(fetchLessons());
@@ -26,11 +30,13 @@ const Home = () => {
       <Sidebar />
 
       <div className="main-content">
-        <nav className="nav"></nav>
-        <LevelsNavbar level={level} setLevel={setLevel}/>
+        <LevelsNavbar level={level} setLevel={setLevel} setCurrentView={setCurrentView}/>
 
-        <div className="levels-navigation">
-          <Level lessons={lessons} level={level} profile={profile}/>  
+        <div className="lessons-view">
+          {currentView === LessonViews.All && 
+            <Level lessons={lessons} level={level} profile={profile} setCurrentView={setCurrentView} setOpenedLesson={setOpenedLesson} />  
+          }
+          {currentView === LessonViews.Lesson && <LessonPage setCurrentView={setCurrentView} />  }
         </div>
       </div>
     </div>
