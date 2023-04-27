@@ -7,3 +7,9 @@ export class FetchLessonAction implements Action {
 
   constructor(public payload: ILesson[]) { }
 }
+
+export class FetchLessonParts implements Action {
+  readonly type: ActionTypes.FETCH_LESSON_PARTS = ActionTypes.FETCH_LESSON_PARTS;
+
+  constructor(public payload: ILesson[]) { }
+}

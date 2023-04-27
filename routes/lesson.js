@@ -34,11 +34,28 @@ router.get("/current", (req, res) => {
     });
 });
 
+router.get("/parts", (req, res) => {
+  const lessonName = req.query.lessonName;
 
+  Lesson.find({ lessonName: lessonName })
+    .then((lessons) => {
+      if (lessons) {
+        // Send the found lesson as a response
+        res.send(lessons);
+      } else {
+        // Send a 404 error response when the lesson is not found
+        res.status(404).send("Lesson not found");
+      }
+    })
+    .catch((err) => {
+      // Handle any other errors and send an appropriate response
+      res.status(500).send("Error fetching lesson: " + err);
+    });
+});
 
 router.post("/add", (req, res) => {
   Lesson.findOne({ lessonName: req.body.lessonName }).then((lesson) => {
-    if (lesson) {
+    if (lesson && lesson.part === req.body.part) {
       errors.email = "This lesson already exists !";
       return res.status(400).json(errors);
     } else {

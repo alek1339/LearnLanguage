@@ -36,7 +36,7 @@ const Home = () => {
           {currentView === LessonViews.All && 
             <Level lessons={lessons} level={level} profile={profile} setCurrentView={setCurrentView} setOpenedLesson={setOpenedLesson} />  
           }
-          {currentView === LessonViews.Lesson && <LessonPage setCurrentView={setCurrentView} />  }
+          {currentView === LessonViews.Lesson && <LessonPage openedLesson={openedLesson} setCurrentView={setCurrentView} />  }
         </div>
       </div>
     </div>
