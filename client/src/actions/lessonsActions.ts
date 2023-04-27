@@ -41,6 +41,18 @@ export const fetchLesson = (id: string) => (dispatch: Dispatch) => {
     });
 };
 
+
+export const fetchLessonParts = (openedLesson: string) => (dispatch: Dispatch) => {
+  axios.get(`/lessons/parts/`, { params: { lessonName: openedLesson } })
+    .then(res => dispatch({
+      type: ActionTypes.FETCH_LESSON_PARTS,
+      payload: res.data
+    }))
+    .catch(err => console.log(err))
+}
+
+
+
 export const updateLesson = (id: string, lessonData: ILesson) => (dispatch: Dispatch) => {
   axios
     .put(`/lessons/update/${id}`, lessonData)
@@ -51,4 +63,21 @@ export const updateLesson = (id: string, lessonData: ILesson) => (dispatch: Disp
         payload: err.response.data
       })
     )
+};
+
+// Utility function for handling errors
+const handleErrors = (err: any, dispatch: Dispatch) => {
+  if (err.response && err.response.status === 404) {
+    // Handle 404 error, e.g. show error message to user
+    console.log('Lesson not found:', err.response.data); // Log error response data
+  } else {
+    // Handle other errors
+    console.log('Error fetching lesson:', err);
+  }
+
+  // Dispatch error action to Redux store
+  dispatch({
+    type: ActionTypes.GET_ERRORS,
+    payload: err.response.data // You may need to adjust the payload depending on your backend response format
+  });
 };

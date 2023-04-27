@@ -12,6 +12,7 @@ import profileReducer from './profileReducer/profileReducer';
 import learnedLessonReducer from './learnedLessonReducer';
 import practiceTranslationReducer from './practice/practiceTranslationReducer';
 import sentenceReducer from './sentenceReducer';
+import lessonParts from './lessonParts';
 
 export const rootReducer = combineReducers({
     auth: authReducer,
@@ -22,6 +23,7 @@ export const rootReducer = combineReducers({
     questions: questionsReducer,
     lessons: lessonsReducer,
     lesson: lessonReducer,
+    lessonParts: lessonParts,
     practiceSentence: practiceSentenceReducer,
     practiceLesson: practiceLessonReducer,
     practiceTranslation: practiceTranslationReducer,
