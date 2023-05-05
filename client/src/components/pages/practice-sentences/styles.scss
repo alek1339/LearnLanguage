@@ -1,24 +1,31 @@
 @import "../../../styles/colors.scss"; 
 
 .page-container {
-  padding: 50px 40px 0;
+  margin-top: 67px;
 
   &__progress_container {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
     align-items: center;
   }
 
+  &__progress_container {
+    .x-icon {
+      margin-left: 45px;
+    }
+    
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   .sentence-container {
-    margin: 20px 0;
+    margin-left: 25%;
+    margin-top: 50px;
   }
 
   .sentence {
-    border: 1px solid $grey-border;
-    padding: 10px;
-    margin: 20px;
-    font-size: 1.2rem;
-    font-family: sans-serif;
+
   }
 
   .txt-area {

@@ -10,10 +10,3 @@
 .flex{
     display: flex;
 }
-
-.page-container {
-    cursor: default;
-    margin: 0 auto;
-    max-width: 1140px;
-    min-width: 900px;
-}

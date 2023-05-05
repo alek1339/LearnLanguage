@@ -56,14 +56,13 @@ const ConnectWords: IConnectWords = ({ onSubmit, onContinue, showContinue, audio
     onContinue();
 
   }
-  console.log('currentSentence', currentSentence);
-  console.log('currentSentenceArray', currentSentenceArray);
+
   return (
     <div className='connect-words'>
       <div className='translation'>
         {translationInput.map((word, index) => {
           return (
-            <span onClick={(e) => removeWord(e, index)} className='words' key={index}>{word} </span>
+            <span onClick={(e) => removeWord(e, index)} className='words-buble' key={index}>{word} </span>
           )
         })
         }
