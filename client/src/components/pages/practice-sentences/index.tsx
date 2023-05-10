@@ -31,6 +31,8 @@ import MissingWordWithAudio from "../../MissingWordWithAudio";
 import ListenWrite from "../../ListenWrite";
 import Answer from "../../Answer";
 
+import x from '../../../images/icons/x.png';
+
 const PracticeSentencesPage: IPracticeSentencesPage = () => {
   const dispatch = useAppDispatch();
   const currentSentence: ISentence = useSelector((state: RootState) => state.practiceSentence);
@@ -48,7 +50,7 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
   const [correctStrike, setCorrectStrike] = useState(0);
   const [showEnglishTranslation, setShowEnglishTranslation] = useState(true);
   const practiceTranslation = useSelector((state: RootState) => state.practiceTranslation);
-  const progressBarWidth = 700;
+  const progressBarWidth = 900;
   const progressStep = 100 / currentLesson.sentences.length;
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -191,14 +193,15 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
   return (
     <div className="page-container">
       <Audio src={audioSrc} play={playAudio} />
-      <Row className="page-container__progress_container">
-        <Col className="d-flex justify-content-center" xs={1}>
-          <FontAwesomeIcon onClick={onCloseLesson} icon={faX} />
-        </Col>
-        <Col xs={11}>
-          <CustomProgressBar width={progressBarWidth} progress={percentageProgress} progressStep={progressStep} />
-        </Col>
-      </Row>
+      <div className="page-container__progress_container">
+        <div></div>
+        <div>
+          <CustomProgressBar progress={percentageProgress} progressStep={progressStep} />
+        </div>
+        <div className="d-flex justify-content-center" >
+          <img src={x} className="x-icon" onClick={onCloseLesson} />
+        </div>
+      </div>
 
       {
         showEnglishTranslation ?
@@ -211,7 +214,7 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
 
       {/* TODO - add component for switching between levels */}
       {LessonsProgress.zeroLevel === correctStrike ?
-        <ConnectWords audioSrc={audioSrc} onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
+        <ConnectWords isCorrect={translation === ''} audioSrc={audioSrc} onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
         : <></>}
 
       {LessonsProgress.firstLevel === correctStrike ?

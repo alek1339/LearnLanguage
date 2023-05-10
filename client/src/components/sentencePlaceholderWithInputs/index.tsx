@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { SentencePlaceholderWithInputsProps } from './types';
 import { useDispatch } from 'react-redux';
+
+import './styles.scss';
 
 const SentencePlaceholderWithInputs: SentencePlaceholderWithInputsProps = ({ currentSentence, submitBtnRef, continueBtnRef }) => {
   const dispatch = useDispatch();
   const [currentSentenceArray, setCurrentSentenceArray] = useState<Array<string>>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     let temp: any = currentSentence.germanWithHiddenPart?.split(' ');
@@ -14,9 +17,10 @@ const SentencePlaceholderWithInputs: SentencePlaceholderWithInputsProps = ({ cur
       const pixelsPerLetter: number = 10;
 
       if (word.includes('{{') && word.includes('}}')) {
+        inputRef.current && (inputRef.current.value = '');
         const inputWidth = (word.length - brecketsLength) * pixelsPerLetter;
         temp[index] = (
-          <input autoFocus onKeyDown={onPressKey} onChange={onInputChange} style={{ width: inputWidth }} />
+          <input ref={inputRef} autoFocus onKeyDown={onPressKey} onChange={onInputChange} style={{ width: inputWidth }} />
         );
       } else {
         temp[index] = word;
@@ -47,7 +51,7 @@ const SentencePlaceholderWithInputs: SentencePlaceholderWithInputsProps = ({ cur
     dispatch({ type: 'SET_CURRENT_TRANSLATION', payload: translatedResult.join(' ') });
   }
   return (
-    <div>
+    <div className='sentence-placeholder-with-input-container'>
       <span>
         {currentSentenceArray?.map((word, index) => {
           return (

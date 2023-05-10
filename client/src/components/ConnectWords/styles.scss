@@ -1,14 +1,30 @@
+@import "../../styles/colors.scss";
 .connect-words {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 50px;
   
   .words-buble {
     padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin: 1rem 0;
+    border: 1px solid $light-purple;
+    border-radius: 20px;
+    margin-right: 1rem;
+    margin-left: 1rem;
+
+    &-incorrect{
+      background: $pink;
+      padding: 1rem;
+      border: 1px solid $light-purple;
+      border-radius: 20px;
+      margin-right: 1rem;
+
+      &:hover {
+        cursor: pointer;
+      }
+  }
+
   
     &:hover {
       cursor: pointer;
@@ -16,12 +32,13 @@
   }
   
   .translation {  
-    .words{
-      margin: 1rem 0;
-    }
+    width: 75%;
+    margin: 1rem 0;
+    padding-left: 25%;
   }
+  
 
   .words-container {
-    margin: 1rem;
+    margin: 2rem 0 4rem 0;
   }
 }

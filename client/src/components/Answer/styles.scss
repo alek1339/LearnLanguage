@@ -1,5 +1,9 @@
+@import "../../styles/colors.scss";
+
 .answer-container {
-  margin-top: 1rem;
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
   
   &-correct {
     display: flex;
@@ -15,12 +19,18 @@
 
   &-incorrect {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    width: 100%;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    padding: 1rem;
+    align-items: center;
+    background: $pink;
+    padding: 10px 25px;
+    color: $dark-grey-text;
+    border: 1px solid $pink-border;
+    border-radius: 20px;
+  }
+
+  img {
+    width: 26px;
+    height: 26px;
+    margin-right: 25px;
   }
 }

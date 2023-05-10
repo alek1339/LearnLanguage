@@ -6,6 +6,9 @@ import { ISentence } from '../../types/Sentence';
 import PracticeBtns from '../PracticeBtns';
 import Audio from '../Audio/Audio';
 import TranslationTextArea from '../TranslationTextArea';
+import PlayBtn from '../../PlayBtn';
+
+import './styles.scss';
 
 const ListenWrite: ListenWriteProps = ({
   onSubmit,
@@ -46,8 +49,8 @@ const ListenWrite: ListenWriteProps = ({
   }
 
   return (
-    <div>
-      <button disabled={disablePlay} onClick={handlePlayAudio}>Play</button>
+    <div className='listen-write-container'>
+      <PlayBtn disabled={disablePlay} onClick={handlePlayAudio} />
       <Audio play={playAudio} src={audioSrc} />
       <TranslationTextArea onSubmit={onSubmit} resetTranslation={resetTranslation} setResetTranslation={setResetTranslation} />
       <div>

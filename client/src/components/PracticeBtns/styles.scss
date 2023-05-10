@@ -1,0 +1,13 @@
+@import "../../styles/colors.scss";
+
+.submit-btn {
+  padding: 1rem 6.75rem;
+  background: $main-blue;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  color: #FFFFFF;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

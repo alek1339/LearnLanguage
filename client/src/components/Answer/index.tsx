@@ -1,6 +1,8 @@
 import React from 'react';
 import { AnswerProps } from './types';
 
+import pen from '../../images/icons/pen.png';
+
 import './styles.scss';
 
 const Answer: AnswerProps = ({ answer, isCorrect }) => {
@@ -8,9 +10,10 @@ const Answer: AnswerProps = ({ answer, isCorrect }) => {
 
   return (
     <div className={`answer-container`}>
-      <div className={`answer-container-${className}`}>
+      <span className={`answer-container-${className}`}>
+        <img src={pen} alt="pen" />
         {answer}
-      </div>
+      </span>
     </div>
   )
 }

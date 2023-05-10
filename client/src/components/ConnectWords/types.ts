@@ -5,4 +5,5 @@ export type IConnectWords = FC<{
   onContinue: () => void;
   showContinue: boolean;
   audioSrc: string;
+  isCorrect: boolean;
 }>;
