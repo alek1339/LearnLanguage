@@ -6,6 +6,8 @@ import { RootState } from '../../reducers';
 import { useAppDispatch } from '../../store';
 import { ISentence } from '../../types/Sentence';
 
+import './styles.scss';
+
 const TranslationTextArea: ITranslationTextArea = ({ onSubmit, resetTranslation, setResetTranslation }) => {
   const dispatch = useAppDispatch();
   const [translationInput, setTranslationInput] = useState('');

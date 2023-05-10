@@ -22,27 +22,16 @@
   .sentence-container {
     margin-left: 25%;
     margin-top: 50px;
+
+    span {
+      color: $dark-grey-text;
+    }
   }
-
-  .sentence {
-
-  }
-
-  .txt-area {
-    width: 600px;
-    font-size: 1.2rem;
-  }
-
-  button {
-    font-family: sans-serif;
-    border: none;
-    text-transform: uppercase;
-    padding-left: 16px;
-    padding-right: 16px;
-    font-weight: 700;
-  }
-
   svg:hover {
     cursor: pointer;
+  }
+
+  .submit-btn {
+    margin-top: 50px;
   }
 }

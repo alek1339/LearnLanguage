@@ -1,7 +1,10 @@
-.translate-sentence-container {
+.listen-write-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+
+  .play-btn {
+    margin: 30px 0;
+  }
 }

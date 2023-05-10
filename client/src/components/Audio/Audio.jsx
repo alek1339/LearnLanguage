@@ -28,7 +28,7 @@ const Audio = ({ src, play }) => {
       {/* Important!!! */}
       {/* KEY here is very important. It is used to re-render the component when the src prop changes.
       Otherwise The browser is not recognising any changes React makes to the src prop and will not re-render the component. */}
-      <audio key={src} ref={audioPLayer}>
+      <audio key={src} ref={audioPLayer} >
         <source
           src={soundFile}
           type="audio/wav"

@@ -214,7 +214,7 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
 
       {/* TODO - add component for switching between levels */}
       {LessonsProgress.zeroLevel === correctStrike ?
-        <ConnectWords audioSrc={audioSrc} onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
+        <ConnectWords isCorrect={translation === ''} audioSrc={audioSrc} onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
         : <></>}
 
       {LessonsProgress.firstLevel === correctStrike ?

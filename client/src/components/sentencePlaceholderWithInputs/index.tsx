@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { SentencePlaceholderWithInputsProps } from './types';
 import { useDispatch } from 'react-redux';
 
+import './styles.scss';
+
 const SentencePlaceholderWithInputs: SentencePlaceholderWithInputsProps = ({ currentSentence, submitBtnRef, continueBtnRef }) => {
   const dispatch = useDispatch();
   const [currentSentenceArray, setCurrentSentenceArray] = useState<Array<string>>([]);
@@ -49,7 +51,7 @@ const SentencePlaceholderWithInputs: SentencePlaceholderWithInputsProps = ({ cur
     dispatch({ type: 'SET_CURRENT_TRANSLATION', payload: translatedResult.join(' ') });
   }
   return (
-    <div>
+    <div className='sentence-placeholder-with-input-container'>
       <span>
         {currentSentenceArray?.map((word, index) => {
           return (

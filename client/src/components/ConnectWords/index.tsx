@@ -10,12 +10,21 @@ import Audio from '../Audio/Audio';
 
 import './styles.scss';
 
-const ConnectWords: IConnectWords = ({ onSubmit, onContinue, showContinue, audioSrc }) => {
+const ConnectWords: IConnectWords = ({ onSubmit, onContinue, showContinue, audioSrc, isCorrect }) => {
   const dispatch = useAppDispatch();
   const [translationInput, setTranslationInput] = useState<Array<string>>(['']);
   const currentSentence: ISentence = useSelector((state: RootState) => state.practiceSentence);
   const [currentSentenceArray, setCurrentSentenceArray] = useState<Array<string>>([]);
   const [playAudio, setPlayAudio] = useState(false);
+  const [translationClassName, setTranslationClassName] = useState('words-buble');
+
+  useEffect(() => {
+    if (isCorrect) {
+      setTranslationClassName('words-buble');
+    } else {
+      setTranslationClassName('words-buble-incorrect');
+    }
+  }, [isCorrect]);
 
   useEffect(() => {
     const germanToArr: Array<string> = currentSentence.german.replace(/,/g, '').replace(/\./g, '').split(' ');
@@ -30,31 +39,32 @@ const ConnectWords: IConnectWords = ({ onSubmit, onContinue, showContinue, audio
   // TODO: ADD MISSING TYPES AND REMOVE ANY
 
   const handleTranslationChange = (e: any, index: number) => {
-    let prevTranslation: Array<string> = translationInput;
-    let prevSentenceArray: Array<string> = currentSentenceArray.filter((word, idx) => idx !== index);
-    prevTranslation.push(e.target.innerText)
-    setTranslationInput(prevTranslation);
-    setCurrentSentenceArray(prevSentenceArray);
-    dispatch(setCurrentTranslation(prevTranslation.join(' ')));
+    if (isCorrect) {
+      let prevTranslation: Array<string> = translationInput;
+      let prevSentenceArray: Array<string> = currentSentenceArray.filter((word, idx) => idx !== index);
+      prevTranslation.push(e.target.innerText)
+      setTranslationInput(prevTranslation);
+      setCurrentSentenceArray(prevSentenceArray);
+      dispatch(setCurrentTranslation(prevTranslation.join(' ')));
+    }
   }
 
   const removeWord = (e: any, index: number) => {
-    let prevTranslation: Array<string> = translationInput.filter((word, idx) => idx !== index);
-    setTranslationInput(prevTranslation);
-    dispatch(setCurrentTranslation(prevTranslation.join(' ')));
-    setCurrentSentenceArray([...currentSentenceArray, e.target.innerText]);
+    if (isCorrect) {
+      let prevTranslation: Array<string> = translationInput.filter((word, idx) => idx !== index);
+      setTranslationInput(prevTranslation);
+      dispatch(setCurrentTranslation(prevTranslation.join(' ')));
+      setCurrentSentenceArray([...currentSentenceArray, e.target.innerText]);
+    }
   }
 
   const handleSubmit = () => {
     onSubmit();
-
   }
 
   const handleOnContinue = () => {
-    console.log('onContinue');
     setPlayAudio(true);
     onContinue();
-
   }
 
   return (
@@ -62,7 +72,7 @@ const ConnectWords: IConnectWords = ({ onSubmit, onContinue, showContinue, audio
       <div className='translation'>
         {translationInput.map((word, index) => {
           return (
-            <span onClick={(e) => removeWord(e, index)} className='words-buble' key={index}>{word} </span>
+            <span onClick={(e) => removeWord(e, index)} className={translationClassName} key={index}>{word} </span>
           )
         })
         }

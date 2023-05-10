@@ -14,7 +14,7 @@ const Translation: ITranslation = ({ onSubmit, onContinue, showContinue }) => {
   }
 
   return (
-    <div>
+    <div className='translate-sentence-container'>
       <TranslationTextArea onSubmit={onSubmit} resetTranslation={resetTranslation} setResetTranslation={setResetTranslation} />
       <div className="d-flex justify-content-center">
         <PracticeBtns showContinue={showContinue} onContinue={handleContinue} onSubmit={onSubmit} />

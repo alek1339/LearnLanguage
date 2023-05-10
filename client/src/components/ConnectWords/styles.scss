@@ -10,6 +10,20 @@
     padding: 1rem;
     border: 1px solid $light-purple;
     border-radius: 20px;
+    margin-right: 1rem;
+    margin-left: 1rem;
+
+    &-incorrect{
+      background: $pink;
+      padding: 1rem;
+      border: 1px solid $light-purple;
+      border-radius: 20px;
+      margin-right: 1rem;
+
+      &:hover {
+        cursor: pointer;
+      }
+  }
 
   
     &:hover {
@@ -21,22 +35,10 @@
     width: 75%;
     margin: 1rem 0;
     padding-left: 25%;
-    .words{
-      margin: 1rem 0;
-    }
-
-    .words-buble {
-      margin-right: 1rem;
-    }
   }
   
 
   .words-container {
     margin: 2rem 0 4rem 0;
-
-    .words-buble {
-      margin-right: 1rem;
-      margin-left: 1rem;
-    }
   }
 }
