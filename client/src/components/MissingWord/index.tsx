@@ -13,7 +13,7 @@ const MissingWord: IMissingWord = ({ onSubmit, onContinue, showContinue, submitB
 
   return (
     <div className='missing-words'>
-      <SentencePlaceholderWithInputsProps submitBtnRef={submitBtnRef} continueBtnRef={continueBtnRef} currentSentence={currentSentence} />
+      <SentencePlaceholderWithInputsProps isCorrect={!showContinue} submitBtnRef={submitBtnRef} continueBtnRef={continueBtnRef} currentSentence={currentSentence} />
       <div>
         <PracticeBtns submitBtnRef={submitBtnRef} continueBtnRef={continueBtnRef} showContinue={showContinue} onContinue={onContinue} onSubmit={onSubmit} />
       </div>
