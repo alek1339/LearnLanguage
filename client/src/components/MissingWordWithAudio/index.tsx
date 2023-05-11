@@ -43,7 +43,7 @@ const MissingWordWithAudio: MissingWordWithAudioProps = ({ onSubmit, onContinue,
       <PlayBtn disabled={disablePlay} onClick={handlePlayAudio} />
       <Audio play={playAudio} src={audioSrc} />
       <div className='sentence-with-inputs'>
-        <SentencePlaceholderWithInputs submitBtnRef={submitBtnRef} currentSentence={currentSentence} />
+        <SentencePlaceholderWithInputs isCorrect={!showContinue} submitBtnRef={submitBtnRef} currentSentence={currentSentence} />
       </div>
       <div>
         <PracticeBtns continueBtnRef={continueBtnRef} submitBtnRef={submitBtnRef} showContinue={showContinue} onContinue={onContinue} onSubmit={onSubmit} />

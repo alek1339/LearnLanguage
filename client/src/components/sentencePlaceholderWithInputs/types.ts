@@ -5,4 +5,5 @@ export type SentencePlaceholderWithInputsProps = FC<{
   currentSentence: ISentence;
   submitBtnRef?: React.RefObject<HTMLButtonElement>;
   continueBtnRef?: React.RefObject<HTMLButtonElement>;
+  isCorrect?: boolean;
 }>;

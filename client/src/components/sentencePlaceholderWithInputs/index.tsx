@@ -4,10 +4,19 @@ import { useDispatch } from 'react-redux';
 
 import './styles.scss';
 
-const SentencePlaceholderWithInputs: SentencePlaceholderWithInputsProps = ({ currentSentence, submitBtnRef, continueBtnRef }) => {
+const SentencePlaceholderWithInputs: SentencePlaceholderWithInputsProps = ({ currentSentence, submitBtnRef, continueBtnRef, isCorrect }) => {
   const dispatch = useDispatch();
   const [currentSentenceArray, setCurrentSentenceArray] = useState<Array<string>>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+  const wrongAnswerClass: string = 'wrong-answer';
+
+  useEffect(() => {
+    if (!isCorrect && inputRef.current) {
+      inputRef.current.classList.add(wrongAnswerClass);
+    } else if (inputRef.current) {
+      inputRef.current.classList.remove(wrongAnswerClass);
+    }
+  }, [isCorrect]);
 
   useEffect(() => {
     let temp: any = currentSentence.germanWithHiddenPart?.split(' ');
