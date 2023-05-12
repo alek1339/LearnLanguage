@@ -65,24 +65,14 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
   }, []);
 
   useEffect(() => {
-    if (profile.learnedLessons && currentLesson._id &&
-      !profile.learnedLessons.find(l => l.lessonId === currentLesson._id)) {
+    const currentLessonStrike = profile.learnedLessons?.find(l => l.lessonId === currentLesson._id)?.correctStrike;
+    if (currentLessonStrike) {
+      setCorrectStrike(currentLessonStrike);
 
-      const newLearnedLesson: IAddLearnedLessonData = {
-        lessonId: currentLesson._id,
-        userId: profile._id || '',
-      }
-      dispatch(addLearnedLesson(newLearnedLesson));
-    } else {
-      const currentLessonStrike = profile.learnedLessons?.find(l => l.lessonId === currentLesson._id)?.correctStrike;
-      if (currentLessonStrike) {
-        setCorrectStrike(currentLessonStrike);
-
-        if (currentLessonStrike === LessonsProgress.firstLevel || LessonsProgress.thirdLevel === correctStrike) {
-          setShowEnglishTranslation(false);
-        } else {
-          setShowEnglishTranslation(true);
-        }
+      if (currentLessonStrike === LessonsProgress.firstLevel || LessonsProgress.thirdLevel === correctStrike) {
+        setShowEnglishTranslation(false);
+      } else {
+        setShowEnglishTranslation(true);
       }
     }
 
@@ -159,10 +149,18 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
   }
 
   const onFinsishLesson = () => {
+    const currentLessonStrike = profile.learnedLessons?.find(l => l.lessonId === currentLesson._id)?.correctStrike;
+
     let updatedLessons = profile.learnedLessons;
 
-    if (profile.learnedLessons && currentLesson._id && !profile.learnedLessons.filter((lesson) => lesson.lessonId === currentLesson._id).length) {
+    if (!currentLessonStrike && profile.learnedLessons && currentLesson._id && !profile.learnedLessons.filter((lesson) => lesson.lessonId === currentLesson._id).length) {
       updatedLessons = [...profile.learnedLessons, learnedLesson];
+
+      const newLearnedLesson: IAddLearnedLessonData = {
+        lessonId: currentLesson._id,
+        userId: profile._id || '',
+      }
+      dispatch(addLearnedLesson(newLearnedLesson));
     } else {
       updatedLessons = profile.learnedLessons?.map((lesson) => {
         if (lesson.lessonId === currentLesson._id) {
@@ -173,13 +171,13 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
         }
         return lesson;
       })
+      let profileData = {
+        id: profile._id,
+        lesson: updatedLessons
+      };
+      updateProfile(profileData)
     }
 
-    let profileData = {
-      id: profile._id,
-      lesson: updatedLessons
-    };
-    updateProfile(profileData)
     setShowModal(true);
   }
 

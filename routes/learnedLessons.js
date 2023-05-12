@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
+const Profile = require('../models/Profile');
+
 const LearnedLessons = require('../models/LearnedLessons');
 const updateLessonRepetitionStatus = require('../utils/spacedRepetitionChecker');
 
@@ -20,9 +22,13 @@ router.get('/', (req, res) => {
 })
 
 router.post('/add', (req, res) => {
-    LearnedLessons.findOne({ _id: req.body.id }).then(lesson => {
+
+    LearnedLessons.findOne({
+        lessonId: req.body.lessonId,
+        userId: req.body.userId
+    }).then(lesson => {
         if (lesson) {
-            errors.email = 'This lesson already exists !'
+            errors.lesson = 'This lesson already exists !'
             return res.status(400).json(errors)
         } else {
             const newLesson = new LearnedLessons({
@@ -33,11 +39,27 @@ router.post('/add', (req, res) => {
 
             newLesson
                 .save()
-                .then(lesson => res.json(lesson))
-                .catch(err => res.json(err))
+                .then(lesson => {
+
+                    Profile.findOneAndUpdate(
+                        { _id: req.body.userId },
+                        { $push: { learnedLessons: lesson } },
+                        { useFindAndModify: false, upsert: true }
+                    )
+                        .then((result) => {
+                            console.log('result', result)
+                        })
+                        .catch((error) => {
+                            console.log('error', error)
+                        });
+                })
+                .catch(err => console.log(err))
         }
     })
 })
+
+
+
 
 router.put('/update-learned-lesson', (req, res) => {
     LearnedLessons.findOneAndUpdate({ english: req.body.english }, {

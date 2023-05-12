@@ -28,6 +28,7 @@ router.post("/add", (req, res) => {
       return res.status(400).json(errors);
     } else {
       const newProfile = new Profile({
+        firstName: req.body.firstName,
         lastName: req.body.lastName,
         img: req.body.img,
         user_id: req.body.user_id,
