@@ -31,7 +31,7 @@ const LessonPage: ILessonPage = ({ setCurrentView, openedLesson }) => {
   }
 
   const getStar = (part: ILesson) => {
-    const lesson = profile?.learnedLessons.find((lesson: any) => lesson.lessonId === part._id);
+    const lesson = profile?.learnedLessons?.find((lesson: any) => lesson.lessonId === part._id);
     const correctStrike = lesson?.correctStrike || 0;
     const shouldRepeat = lesson?.shouldRepeat || false;
 
