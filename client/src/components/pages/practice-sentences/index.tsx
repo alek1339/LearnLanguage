@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Button, Col, Form, Row } from "react-bootstrap"
+import { Row } from "react-bootstrap"
 import { IPracticeSentencesPage } from "./types"
 import './styles.scss';
 import { useSelector } from "react-redux";
@@ -10,16 +10,11 @@ import { setCurrentLesson } from "../../../actions/practice/practiceLessonsActio
 import { useParams } from "react-router-dom";
 import { ISentence } from "../../../types/Sentence";
 import { useNavigate } from 'react-router-dom';
-import { faX } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { setCurrentSentence } from "../../../actions/practice/practiceSentencesActions";
 import { sentenceTraslationCheck } from "../../../utils/stenceTranslationCheck";
 import Audio from '../../Audio/Audio';
 import { addLearnedLesson } from "../../../actions/learnedLessonsActions";
-import Translation from "../../Translation";
 import { LessonsProgress } from "../../../enums/lessonsProgress";
-import ConnectWords from "../../ConnectWords";
-import MissingWord from "../../MissingWord";
 import onContinue from "../../../utils/onContinue";
 import updateProgress from "../../../utils/updateProgress";
 import { IAddLearnedLessonData } from "../../../types/LearnedLesson";
@@ -27,11 +22,10 @@ import { useAppDispatch } from "../../../store";
 import Modal from "../../Modal";
 import { createPortal } from "react-dom";
 import { updateProfile } from "../../../actions/profileActions";
-import MissingWordWithAudio from "../../MissingWordWithAudio";
-import ListenWrite from "../../ListenWrite";
 import Answer from "../../Answer";
 
 import x from '../../../images/icons/x.png';
+import LevelSwitcher from "../../LevelsSwitcher";
 
 const PracticeSentencesPage: IPracticeSentencesPage = () => {
   const dispatch = useAppDispatch();
@@ -50,7 +44,6 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
   const [correctStrike, setCorrectStrike] = useState(0);
   const [showEnglishTranslation, setShowEnglishTranslation] = useState(true);
   const practiceTranslation = useSelector((state: RootState) => state.practiceTranslation);
-  const progressBarWidth = 900;
   const progressStep = 100 / currentLesson.sentences.length;
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -210,41 +203,20 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
           </Row> : <></>
       }
 
-      {/* TODO - add component for switching between levels */}
-      {LessonsProgress.zeroLevel === correctStrike ?
-        <ConnectWords isCorrect={translation === ''} audioSrc={audioSrc} onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
-        : <></>}
-
-      {LessonsProgress.firstLevel === correctStrike ?
-        <MissingWordWithAudio
-          onSubmit={onSubmit}
-          onContinue={handleOnContinue}
-          showContinue={showContinue}
-          submitBtnRef={submitButtonRef}
-          continueBtnRef={continueButtonRef}
-        /> : <></>}
-
-      {LessonsProgress.secondLevel === correctStrike ?
-        <MissingWord
-          onSubmit={onSubmit}
-          onContinue={handleOnContinue}
-          showContinue={showContinue}
-          submitBtnRef={submitButtonRef}
-          continueBtnRef={continueButtonRef} />
-        : <></>}
-
-      {LessonsProgress.thirdLevel === correctStrike ?
-        <ListenWrite onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
-        : <></>}
-
-
-      {LessonsProgress.fourthLevel <= correctStrike ?
-        <Translation onSubmit={onSubmit} onContinue={handleOnContinue} showContinue={showContinue} />
-        : <></>}
-
       {translation !== '' ?
         <Answer answer={translation} isCorrect={translation === ''} /> : ''
       }
+
+      <LevelSwitcher
+        correctStrike={correctStrike}
+        translation={translation}
+        audioSrc={audioSrc}
+        onSubmit={onSubmit}
+        onContinue={handleOnContinue}
+        showContinue={showContinue}
+        submitButtonRef={submitButtonRef}
+        continueButtonRef={continueButtonRef}
+      />
 
       {showModal && createPortal(
         <Modal onClose={onModalClose}>
@@ -253,6 +225,7 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
         </Modal>,
         document.getElementById('modal-root') as HTMLElement
       )}
+
     </div>
   )
 }
