@@ -27,8 +27,6 @@ const MyNavbar: IMyNavbar = () => {
               <Nav.Link className='nav-link' href='/login'>{' '}Login</Nav.Link>
             </>
           }
-
-
         </div>
       </Navbar.Collapse>
     </Navbar>

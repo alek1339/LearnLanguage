@@ -31,6 +31,7 @@ import PracticeSentencesPage from "./components/pages/practice-sentences";
 import CreateProfile from "./components/auth/CreateProfile";
 import NoMatch from "./components/pages/NoMatch";
 import ProtectedRoute from "./components/common/PrivateRoute";
+import AdminRoute from "./components/common/AdminRoute";
 import LessonContent from "./components/pages/LessonContent";
 
 // Check for token
@@ -61,81 +62,101 @@ class App extends Component {
             <main>
               <div className="main-content">
                 <Routes>
-                  <Route exact path="/" element={<Home />} />
+                  <Route exact path="/"
+                    element={
+                      <ProtectedRoute>
+                        <Home />
+                      </ProtectedRoute>
+                    }
+                  />
                   <Route exact path="/login" element={<Login />} />
                   <Route exact path="/register" element={<Register />} />
-                  <Route exact path="/profile" element={<CreateProfile />} />
+                  <Route exact path="/profile"
+                    element={
+                      <ProtectedRoute>
+                        <CreateProfile />
+                      </ProtectedRoute>
+                    }
+                  />
                   <Route
                     path="/admin"
                     element={
-                      <ProtectedRoute>
+                      <AdminRoute>
                         <AdminPage />
-                      </ProtectedRoute>
+                      </AdminRoute>
                     }
                   />
                   <Route
                     path="/admin/sentences"
                     element={
-                      <ProtectedRoute>
+                      <AdminRoute>
                         <Sentences />
-                      </ProtectedRoute>
+                      </AdminRoute>
                     }
                   />
                   <Route
                     path="/admin/edit-sentence/:_id"
                     element={
-                      <ProtectedRoute>
+                      <AdminRoute>
                         <EditSentence />
-                      </ProtectedRoute>
+                      </AdminRoute>
                     }
                   />
                   <Route
                     path="/admin/add-lesson"
                     element={
-                      <ProtectedRoute>
+                      <AdminRoute>
                         <AddLesson />
-                      </ProtectedRoute>
+                      </AdminRoute>
                     }
                   />
                   <Route
                     path="/admin/edit-lesson/:_id"
                     element={
-                      <ProtectedRoute>
+                      <AdminRoute>
                         <EditLesson />
-                      </ProtectedRoute>
+                      </AdminRoute>
                     }
                   />
                   <Route
                     path="/admin/add-word"
                     element={
-                      <ProtectedRoute>
+                      <AdminRoute>
                         <AddWord />
-                      </ProtectedRoute>
+                      </AdminRoute>
                     }
                   />
                   <Route
                     path="/admin/add-sentence"
                     element={
-                      <ProtectedRoute>
+                      <AdminRoute>
                         <AddSentence />
-                      </ProtectedRoute>
+                      </AdminRoute>
                     }
                   />
                   <Route
                     path="/admin/add-question"
                     element={
-                      <ProtectedRoute>
+                      <AdminRoute>
                         <AddQuestion />
-                      </ProtectedRoute>
+                      </AdminRoute>
                     }
                   />
                   <Route
                     path="/practice-sentence/:_id"
-                    element={<PracticeSentencesPage />}
+                    element={
+                      <ProtectedRoute>
+                        <PracticeSentencesPage />
+                      </ProtectedRoute>
+                    }
                   />
                   <Route
                     path="/lesson-content/:_id"
-                    element={<LessonContent />}
+                    element={
+                      <ProtectedRoute>
+                        <LessonContent />
+                      </ProtectedRoute>
+                    }
                   />
                   <Route path="*" element={<NoMatch />} />
                 </Routes>

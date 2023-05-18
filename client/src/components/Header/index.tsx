@@ -1,8 +1,8 @@
 import React from 'react';
 import book from '../../images/icons/book.png';
-import gear from '../../images/icons/gear.png';
 
 import './styles.scss';
+import GearDropdown from '../GearDropdown';
 
 const Header = () => {
   return (
@@ -14,7 +14,7 @@ const Header = () => {
           <h3>streak!</h3>
         </div>
       </div>
-      <img className='gear-icon' src={gear} alt="gear-icon" />
+      <GearDropdown />
     </div>
   )
 }
