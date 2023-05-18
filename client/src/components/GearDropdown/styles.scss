@@ -1,0 +1,32 @@
+.dropdown-container {
+  position: relative;
+  margin-right: calc(9.5% - 15px);
+
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 999;
+
+    .dropdown-item {
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .gear-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+}
