@@ -18,10 +18,12 @@ import 'react-quill/dist/quill.snow.css';
 import DOMPurify from 'dompurify';
 import { ILessonForm } from "./types";
 import InputSelect from "../InputSelect";
+import Select from "../../components/Select";
+
+import './styles.scss';
 
 const LessonForm: ILessonForm = ({ lesson, onSubmit }) => {
   const dispatch = useAppDispatch();
-  const [showLevelsOpts, setShowLevelsOpts] = useState(false);
   const [selectedWord, setSelectedWord] = useState<string>();
   const { inputs, handleInputChange, resetInputs, setNewInputValues } = useFormInputs({
     initialValues:
@@ -37,7 +39,7 @@ const LessonForm: ILessonForm = ({ lesson, onSubmit }) => {
   const [addedWords, setAddedWords] = useState<Array<string>>([]);
   const [lessonNameError, setLessonNameError] = useState('');
   const [videoLessonError, setVideoLessonError] = useState('');
-  const [selectedLevel, setSelectedLevel] = useState("Level");
+  const [selectedLevel, setSelectedLevel] = useState<string>("Select Level");
   const words = useSelector((state: RootState) => state.words);
   const [filteredWords, setFilteredWords] = useState<Array<IWord>>([]);
   const [wordInput, setWordInput] = useState("");
@@ -143,7 +145,6 @@ const LessonForm: ILessonForm = ({ lesson, onSubmit }) => {
 
   const selectLevel = (level: string) => {
     setSelectedLevel(level);
-    setShowLevelsOpts(false);
   };
 
   const handleLessonNameChange = (e: ChangeEvent<any>) => {
@@ -216,29 +217,10 @@ const LessonForm: ILessonForm = ({ lesson, onSubmit }) => {
             />
           </div>
 
-          <div
-            className="level-select"
-            onClick={() => setShowLevelsOpts(!showLevelsOpts)}
-          >
-            <span className="pl-15">{selectedLevel}</span>
+          <div>
+            <Select header={selectedLevel} options={LanguageLevels} onClick={selectLevel} />
           </div>
-          <div></div>
-          {showLevelsOpts ? (
-            <div>
-              <ul>
-                {LanguageLevels.map((level) => {
-                  return (
-                    <li key={level} onClick={() => selectLevel(level)}>
-                      {level}
-                    </li>
-                  );
-                })
-                }
-              </ul>
-            </div>
-          ) : (
-            ""
-          )}
+
         </div>
         <div className="grid mb-32 words-row inputs-container">
           <input
