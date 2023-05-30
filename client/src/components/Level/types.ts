@@ -5,7 +5,7 @@ import { IProfile } from "../../types/Profile";
 export type ILevel = FC<{
   level: string;
   lessons: ILesson[];
-  profile: IProfile;
+  profile?: IProfile;
   setCurrentView: (view: string) => void;
   setOpenedLesson: (lesson: string) => void;
 }>

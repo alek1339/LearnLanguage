@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
+import { createPortal } from "react-dom";
 import { Row } from "react-bootstrap"
 import { IPracticeSentencesPage } from "./types"
 import './styles.scss';
@@ -20,12 +21,14 @@ import updateProgress from "../../../utils/updateProgress";
 import { IAddLearnedLessonData } from "../../../types/LearnedLesson";
 import { useAppDispatch } from "../../../store";
 import Modal from "../../Modal";
-import { createPortal } from "react-dom";
+
 import { updateProfile } from "../../../actions/profileActions";
 import Answer from "../../Answer";
 
 import x from '../../../images/icons/x.png';
 import LevelSwitcher from "../../LevelsSwitcher";
+
+import onFinsishLesson from "../../../utils/onFinishLesson";
 
 const PracticeSentencesPage: IPracticeSentencesPage = () => {
   const dispatch = useAppDispatch();

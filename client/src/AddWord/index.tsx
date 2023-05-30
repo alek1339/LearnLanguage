@@ -61,13 +61,13 @@ const AddWord: IAddWord = () => {
           {memoizedList}
         </div>
         <div className='flex direction-column'>
-          <input placeholder="English" name="english" value={inputs.english} onChange={handleInputChange} />
-          <input placeholder="German" name="german" value={inputs.german} onChange={handleInputChange} />
-          <input placeholder="Plural" name="plural" value={inputs.plural} onChange={handleInputChange} />
-          <input placeholder="Feminine" name="feminine" value={inputs.feminine} onChange={handleInputChange} />
-          <input placeholder="Masculine" name="masculine" value={inputs.masculine} onChange={handleInputChange} />
-          <input placeholder="Neuter" name="neuter" value={inputs.neuter} onChange={handleInputChange} />
-          <input placeholder="Image" name="img" value={inputs.img} onChange={handleInputChange} />
+          <input aria-label='English' placeholder="English" name="english" value={inputs.english} onChange={handleInputChange} />
+          <input aria-label='German' placeholder="German" name="german" value={inputs.german} onChange={handleInputChange} />
+          <input aria-label='Plural' placeholder="Plural" name="plural" value={inputs.plural} onChange={handleInputChange} />
+          <input aria-label='Feminine' placeholder="Feminine" name="feminine" value={inputs.feminine} onChange={handleInputChange} />
+          <input aria-label='Masculine' placeholder="Masculine" name="masculine" value={inputs.masculine} onChange={handleInputChange} />
+          <input aria-label='Neuter' placeholder="Neuter" name="neuter" value={inputs.neuter} onChange={handleInputChange} />
+          <input aria-label='Image' placeholder="Image" name="img" value={inputs.img} onChange={handleInputChange} />
         </div>
         <button className='primary-btn mt-75' onClick={(e) => handleSubmit(e)}>Add Word</button>
       </div>
