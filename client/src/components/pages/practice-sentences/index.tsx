@@ -29,6 +29,7 @@ import x from '../../../images/icons/x.png';
 import LevelSwitcher from "../../LevelsSwitcher";
 
 import onFinsishLesson from "../../../utils/onFinishLesson";
+import { allSentencesHasAudioCheck } from "../../../utils/allSentencesHasAudioCheck";
 
 const PracticeSentencesPage: IPracticeSentencesPage = () => {
   const dispatch = useAppDispatch();
@@ -54,6 +55,11 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
   const [audioSrc, setAudioSrc] = useState('./audio1.mp3');
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const continueButtonRef = useRef<HTMLButtonElement>(null);
+  const [allSentencesHaveAudio, setAllSentencesHaveAudio] = useState(false);
+
+  useEffect(() => {
+    setAllSentencesHaveAudio(allSentencesHasAudioCheck(currentLesson))
+  }, [currentLesson]);
 
   useEffect(() => {
     dispatch(setCurrentLesson(_id || ''));
@@ -219,6 +225,7 @@ const PracticeSentencesPage: IPracticeSentencesPage = () => {
         showContinue={showContinue}
         submitButtonRef={submitButtonRef}
         continueButtonRef={continueButtonRef}
+        allSentencesHaveAudio={allSentencesHaveAudio}
       />
 
       {showModal && createPortal(
