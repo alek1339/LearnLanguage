@@ -10,4 +10,5 @@ export type ILevelSwitcher = FC<{
   showContinue: boolean;
   submitButtonRef?: React.RefObject<HTMLButtonElement>;
   continueButtonRef?: React.RefObject<HTMLButtonElement>;
+  allSentencesHaveAudio: boolean;
 }>;
