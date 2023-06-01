@@ -51,11 +51,15 @@ const LessonPage: ILessonPage = ({ setCurrentView, openedLesson }) => {
     return images;
   }
 
+  const handleReadLesson = (lessonId: string) => {
+    navigate(`/lesson-content/${lessonId}`);
+  };
+
   return (
     <div className='lesson-page-container'>
       <nav>
         <button className='go-back-btn' onClick={() => setCurrentView(LessonViews.All)}>{`< Go Back`}</button>
-        <ActionButton onClick={handleOnClick} name="Read lesson">
+        <ActionButton onClick={() => handleReadLesson(lessonParts[0]._id)} name="Read lesson">
           <img src={openBook} alt="read lesson" />
         </ActionButton>
       </nav>

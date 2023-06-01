@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ILevel } from './types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './styles.scss';
 
 import openBook from '../../images/open_book.png';
@@ -11,6 +11,7 @@ import LessonButton from '../LessonButton';
 
 const Level: ILevel = ({ level, lessons, profile, setCurrentView, setOpenedLesson }) => {
   const [uniqueLessons, setUniqueLessons] = useState<ILesson[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const uniqueLessons: ILesson[] = [];
@@ -28,6 +29,10 @@ const Level: ILevel = ({ level, lessons, profile, setCurrentView, setOpenedLesso
     setOpenedLesson(lessonName);
   };
 
+  const handleReadLesson = (lessonId: string) => {
+    navigate(`/lesson-content/${lessonId}`);
+  };
+
   return (
     <section className='level-container'>
       {uniqueLessons &&
@@ -36,7 +41,7 @@ const Level: ILevel = ({ level, lessons, profile, setCurrentView, setOpenedLesso
             return (
               <div className='lesson' key={lesson._id}>
                 <LessonButton btnText={lesson.lessonName} onClick={() => handleOnClick(LessonViews.Lesson, lesson.lessonName)} />
-                <ActionButton onClick={() => handleOnClick(LessonViews.Lesson, lesson.lessonName)} name="Read lesson">
+                <ActionButton onClick={() => handleReadLesson(lesson._id || '')} name="Read lesson">
                   <img src={openBook} alt="read lesson" />
                 </ActionButton>
               </div>

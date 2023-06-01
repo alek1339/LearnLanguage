@@ -18,18 +18,19 @@ const VideoLesson: IVideoLesson = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Video Lesson</h1>
-      <iframe
-        allowFullScreen={true}
-        src={videoLesson || ''}
-        name={lessonName || ''}
-        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-        allow='encrypted-media'
-        x-frame-options='SAMEORIGIN'
-        referrerPolicy='no-referrer-when-downgrade'
-      />
-    </div>
+    <>
+      {videoLesson && (
+        <iframe
+          allowFullScreen={true}
+          src={videoLesson || ''}
+          name={lessonName || ''}
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+          allow='encrypted-media'
+          x-frame-options='SAMEORIGIN'
+          referrerPolicy='no-referrer-when-downgrade'
+        />
+      )}
+    </>
   )
 }
 

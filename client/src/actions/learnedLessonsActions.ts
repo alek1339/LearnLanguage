@@ -7,7 +7,6 @@ export const addLearnedLesson = (learnedLessonData: IAddLearnedLessonData) => (d
   axios
     .post('/learned-lessons/add', learnedLessonData)
     .then((res) => {
-      console.log('Learned lesson added', res.data);
       dispatch({
         type: ActionTypes.ADD_LEARNED_LESSON,
         payload: res.data,
