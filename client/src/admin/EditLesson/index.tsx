@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../reducers';
 import { ILesson } from '../../types/Lesson';
 import LessonForm from '../LessonForm';
+import AdminNav from '../AdminNav';
 
 const EditLesson: IEditLesson = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +30,7 @@ const EditLesson: IEditLesson = () => {
 
   return (
     <div>
+      <AdminNav />
       <h1 className="flex justify-center">Edit lesson</h1>
       <LessonForm lesson={lesson} onSubmit={onSubmit} />
     </div>
