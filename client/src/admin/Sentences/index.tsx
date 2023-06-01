@@ -7,6 +7,7 @@ import { ISentence } from '../../types/Sentence';
 import InputSelect from '../InputSelect';
 import { useNavigate } from 'react-router-dom';
 import useFormInputs from '../../hooks/useFormInputs';
+import AdminNav from '../AdminNav';
 
 const Sentences = () => {
   const dispatch = useAppDispatch();
@@ -48,14 +49,16 @@ const Sentences = () => {
 
   return (
     <div>
-      <h1>Sentences</h1>
-      <InputSelect
-        onSelect={(e: any) => onSelect(e)}
-        filtered={filteredSentences}
-        inputs={inputs}
-        onInputChange={onInputChange}
-      />
-
+      <AdminNav />
+      <div className="admin-page">
+        <h1>Sentences</h1>
+        <InputSelect
+          onSelect={(e: any) => onSelect(e)}
+          filtered={filteredSentences}
+          inputs={inputs}
+          onInputChange={onInputChange}
+        />
+      </div>
     </div>
   )
 }
