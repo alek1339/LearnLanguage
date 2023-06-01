@@ -11,6 +11,8 @@ import AdminNav from '../AdminNav'
 import { IAddSentence } from './types';
 import SentenceForm from '../SentenceForm';
 
+import './styles.scss';
+
 const AddSentence: IAddSentence = () => {
   const dispatch = useAppDispatch();
   const [filteredSentences, setFilteredSentences] = useState([ISentenceInitialState]);
@@ -33,9 +35,9 @@ const AddSentence: IAddSentence = () => {
   }
 
   return (
-    <div>
+    <div className='add-sentence-container'>
       <AdminNav />
-      <div>
+      <div className='add-sentence'>
         <input placeholder='Check if sentence already exists' onChange={e => onSentenceInputChange(e)} />
         <div className='sentences-row'>
           {
