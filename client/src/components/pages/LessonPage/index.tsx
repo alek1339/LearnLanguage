@@ -39,8 +39,6 @@ const LessonPage: ILessonPage = ({ setCurrentView, openedLesson }) => {
     for (let i = 0; i < 5; i++) {
       let src = emptyStar;
 
-      console.log('correctStrike', profile.learnedLessons)
-
       if (correctStrike > 4 && shouldRepeat && i === 4) {
         src = halfStar;
       } else if (correctStrike > i) {
@@ -71,12 +69,10 @@ const LessonPage: ILessonPage = ({ setCurrentView, openedLesson }) => {
               <div className='stars'>
                 {getStar(part)}
               </div>
-
             </div>
           </li>
         ))}
       </ol>
-
     </div>
   )
 }
